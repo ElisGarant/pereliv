@@ -284,6 +284,18 @@ td{padding:10px 4px;border-top:1px solid var(--line);font-variant-numeric:tabula
 .lb-b{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:22px;flex:none;display:grid;place-items:center}
 .lb-x{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px))}
 @media (min-width:960px){.sticky{position:sticky;top:84px}}
+/* onboarding */
+.guest .side,.guest .tabbar,.guest .fab,.guest .icon-btn,.guest .searchbox.search{display:none!important}
+.guest .main{padding-bottom:40px}
+@media (min-width:960px){.guest .app{grid-template-columns:minmax(0,1fr)}}
+.ob{max-width:640px;margin:0 auto;width:100%;display:grid;gap:14px}
+.obsteps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.obsteps div{display:grid;gap:6px;font-size:11.5px;font-weight:600;color:var(--dim)}
+.obsteps i{height:4px;border-radius:2px;background:var(--line)}
+.obsteps .d{color:var(--mute)}.obsteps .d i{background:var(--fg)}
+.obsteps .c{color:var(--acc)}.obsteps .c i{background:var(--acc)}
+.ladder li.dn::before{background:var(--ok);border-color:var(--ok)}
+.btn:disabled{opacity:.5;cursor:default;transform:none}
 /* bot */
 .tgchat{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--s1);display:grid;min-width:0}
 .tghead{display:flex;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line)}
@@ -532,7 +544,7 @@ const I={
  upload:ic('<path d="M12 16V4M7 9l5-5 5 5M4 16v3.5h16V16"/>'),
 };
 const TABS=[["home","Главная",I.home],["plan","План",I.cal],["orders","Заказы",I.orders],["kb","Знания",I.kb],["com","Сообщество",I.com],["me","Профиль",I.me]];
-const TITLES={bot:"Бот в Telegram",plan:"План",editor:"Редактор уроков",progress:"Прогресс учеников",lesson:"Урок",home:"Главная",orders:"Заказы",kb:"База знаний",com:"Сообщество",me:"Профиль",admin:"Управление"};
+const TITLES={start:"ELI_S team",bot:"Бот в Telegram",plan:"План",editor:"Редактор уроков",progress:"Прогресс учеников",lesson:"Урок",home:"Главная",orders:"Заказы",kb:"База знаний",com:"Сообщество",me:"Профиль",admin:"Управление"};
 const S={route:"home",ordTab:"market",ordType:"Все",kbTab:"base",kbCat:null,kbQ:"",comType:"Все",comSort:"top",useful:new Set(["p2"]),todo:new Set([2]),notif:{orders:true,kb:true,com:false,pay:true},playing:null};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -725,7 +737,7 @@ V.admin=()=>`
   ${[["Маша С.","Обработка","Senior","сдан","52 300 ₽","ok","В работе"],["Илья С.","Инвайтинг","Специалист","нет","21 100 ₽","bad","Риск"],["Артём К.","Обработка","Специалист","сдан","38 400 ₽","ok","В работе"],["Вика Р.","Звонки","Стажёр","сдан","9 800 ₽","warn","Экзамен"],["Катя М.","Инвайтинг","Стажёр","—","2 100 ₽","","Учится"]].map(([n,d,g,r,m,c,s])=>`<tr><td><b>${n}</b></td><td>${d}</td><td>${g}</td><td style="${r==="нет"?"color:var(--bad)":""}">${r}</td><td class="mono">${m}</td><td><span class="tag ${c}">${s}</span></td></tr>`).join("")}</tbody></table></div></section>
 </div>
 <div class="sec">
- <section class="card"><h3 class="h3">Быстрые действия</h3><div style="display:grid;gap:8px;margin-top:10px"><button class="btn pri" data-neworder>${I.plus} Заказ на инвайтинг</button><button class="btn" data-go="editor">${I.kb} Редактор уроков</button><button class="btn" data-go="progress">${I.users} Прогресс учеников</button><button class="btn" data-toast="Редактор статьи откроется здесь">${I.plus} Статья в базу</button><button class="btn" data-toast="Рассылка по сегментам откроется здесь">Объявление в бот</button></div></section>
+ <section class="card"><h3 class="h3">Быстрые действия</h3><div style="display:grid;gap:8px;margin-top:10px"><button class="btn pri" data-neworder>${I.plus} Заказ на инвайтинг</button><button class="btn" data-go="editor">${I.kb} Редактор уроков</button><button class="btn" data-go="progress">${I.users} Прогресс учеников</button><button class="btn" data-go="start">${I.me} Вход новичка · демо</button><button class="btn" data-toast="Редактор статьи откроется здесь">${I.plus} Статья в базу</button><button class="btn" data-toast="Рассылка по сегментам откроется здесь">Объявление в бот</button></div></section>
  <section class="card"><div class="btw"><h3 class="h3">Заявки на вход</h3><span class="tag acc" id="appN">3</span></div>
   <div class="list" style="margin-top:4px">${[["ОН","Олег Н.","Звонки · 8/10"],["СТ","Света Т.","Инвайтинг · 9/10"],["РБ","Рома Б.","Лидген · 6/10"]].map(([a,n,d])=>`<div class="item"><div class="ava ${hue(a)}">${a}</div><div class="grow"><b>${n}</b><span class="xs mute">тест на роль: ${d}</span></div><button class="btn s pri" data-app="ok">Взять</button><button class="btn s" data-app="no" aria-label="Отклонить">✕</button></div>`).join("")}</div></section>
  <section class="card"><h3 class="h3">Требуют внимания</h3><div class="list" style="margin-top:4px">${[["bad","У Ильи удержание упало до 71%","проверь источники инвайта"],["warn","3 человека не сдали отчёт вчера","напомнить в боте"],["warn","4 ученика застряли на уроке 5","предложить разбор"]].map(([c,t,d])=>`<div class="item" style="align-items:flex-start"><span class="tag ${c}" style="padding:3px 5px">●</span><div class="grow"><b>${t}</b><span class="xs mute">${d}</span></div></div>`).join("")}</div></section>
@@ -734,12 +746,12 @@ V.admin=()=>`
 /* ---------- отрисовка ---------- */
 function shell(){
  const r=S.route==="lesson"?"kb":S.route;
- $("#top").innerHTML=`<h1>${TITLES[S.route]}</h1><label class="searchbox search">${I.search}<input placeholder="Поиск по базе знаний" aria-label="Поиск" id="gq"></label><span class="grow"></span><button class="icon-btn" data-notif aria-label="Уведомления">${I.bell}<span class="dot"></span></button>`;
+ $("#top").innerHTML=`<h1>${TITLES[S.route]}</h1><label class="searchbox search">${I.search}<input placeholder="Поиск по базе знаний" aria-label="Поиск" id="gq"></label><span class="grow"></span>${S.route==="start"?'<button class="link" data-obexit>Выйти из демо</button>':""}<button class="icon-btn" data-notif aria-label="Уведомления">${I.bell}<span class="dot"></span></button>`;
  $("#tabbar").innerHTML=TABS.map(([k,n,i])=>`<button class="${r===k?"on":""}" data-go="${k}" aria-current="${r===k?"page":"false"}">${i}<span>${n}</span></button>`).join("");
  const cnt={orders:["2",""],com:["5","a"]};
- $("#sidetabs").innerHTML=TABS.map(([k,n,i])=>`<button class="tab ${r===k?"on":""}" data-go="${k}">${i}${n}${cnt[k]?`<span class="n ${cnt[k][1]}">${cnt[k][0]}</span>`:""}</button>`).join("")+`<div class="grp lbl">Админ</div><button class="tab ${r==="admin"?"on":""}" data-go="admin">${I.admin}Управление<span class="n a">3</span></button><button class="tab ${r==="editor"?"on":""}" data-go="editor">${I.kb}Редактор уроков</button><button class="tab ${r==="progress"?"on":""}" data-go="progress">${I.users}Прогресс учеников</button>`;
+ $("#sidetabs").innerHTML=TABS.map(([k,n,i])=>`<button class="tab ${r===k?"on":""}" data-go="${k}">${i}${n}${cnt[k]?`<span class="n ${cnt[k][1]}">${cnt[k][0]}</span>`:""}</button>`).join("")+`<div class="grp lbl">Админ</div><button class="tab ${r==="admin"?"on":""}" data-go="admin">${I.admin}Управление<span class="n a">3</span></button><button class="tab ${r==="editor"?"on":""}" data-go="editor">${I.kb}Редактор уроков</button><button class="tab ${r==="progress"?"on":""}" data-go="progress">${I.users}Прогресс учеников</button><button class="tab ${r==="start"?"on":""}" data-go="start">${I.me}Вход новичка</button>`;
 }
-function render(){shell();$("#view").innerHTML=`<div class="view">${V[S.route]()}</div>`;if(S.route==="home")renderTodos();if(S.route==="lesson")initLesson();if(S.route==="editor")initEditor();if(S.route==="plan")initPlan();bindInputs()}
+function render(){document.body.classList.toggle("guest",S.route==="start");shell();$("#view").innerHTML=`<div class="view">${V[S.route]()}</div>`;if(S.route==="home")renderTodos();if(S.route==="lesson")initLesson();if(S.route==="editor")initEditor();if(S.route==="plan")initPlan();bindInputs()}
 const TODO=[["Сдать отчёт по инвайтингу","канал ремонта · до 21:00"],["Урок 7: прогрев","2 мин + тест"],["Ответить Пете в разборе","Сообщество · 1 комментарий"]];
 function renderTodos(){
  $("#todos").innerHTML=TODO.map(([t,d],i)=>`<button class="todo ${S.todo.has(i)?"done":""}" data-todo="${i}" aria-pressed="${S.todo.has(i)}"><span class="cb">${S.todo.has(i)?I.check:""}</span><span class="grow"><b>${t}</b><span class="xs mute">${d}</span></span></button>`).join("");
@@ -1475,6 +1487,90 @@ document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)r
  if("rules" in d){rulesSheet();return}
  if(d.fine){FINE_ROW=d.fine;fineSheet(d.fn,d.fo);return}
 });
+
+/* ---------- вход новичка: знакомство → уроки → тест на роль → заявка → ожидание ---------- */
+const DIRS={inv:"Инвайтинг",msg:"Переписка",call:"Звонки",lead:"Лидген"};
+const DIRD={inv:"Находишь людей в тематических чатах и приводишь их в каналы заказчиков",msg:"Переписываешься с клиентами в Telegram и доводишь до оплаты",call:"Звонишь тёплым клиентам и записываешь их на услуги",lead:"Ищешь и проверяешь контакты компаний для заказчиков"};
+const RQ=[
+ {q:"Что тебе ближе?",o:[["Говорить по телефону","call"],["Переписываться","msg"],["Искать информацию и контакты","lead"],["Находить людей в чатах и звать","inv"]]},
+ {q:"Человек не отвечает второй день. Что сделаешь?",o:[["Позвоню","call"],["Напишу с вопросом","msg"],["Найду другого","lead"],["Напишу в общий чат, где он есть","inv"]]},
+ {q:"Что приятнее сделать за день?",o:[["Закрыть сделку в разговоре","call"],["Довести переписку до оплаты","msg"],["Собрать таблицу из 100 контактов","lead"],["Привести 50 человек в канал","inv"]]},
+ {q:"Как ты относишься к отказам?",o:[["Нормально, это часть работы","call"],["Лучше письменно, есть время подумать","msg"],["Предпочитаю работу без лишнего общения","lead"],["Норм, если их много и быстро","inv"]]},
+ {q:"Где тебе проще сосредоточиться?",o:[["В разговоре","call"],["В тексте","msg"],["В таблицах","lead"],["В потоке однотипных действий","inv"]]},
+ {q:"Что из этого ты уже делал?",o:[["Продавал или работал в колл-центре","call"],["Отвечал клиентам в соцсетях","msg"],["Искал информацию для других","lead"],["Вёл или продвигал канал, чат","inv"]]},
+ {q:"Какой темп тебе нравится?",o:[["Быстрый и живой","call"],["Спокойный, но с результатом","msg"],["Размеренный, сам решаю","lead"],["Много коротких задач подряд","inv"]]},
+ {q:"Что для тебя важнее в работе?",o:[["Общаться с людьми","call"],["Убеждать словами","msg"],["Точность и порядок","lead"],["Видеть, как растут цифры","inv"]]},
+ {q:"Задача: из 200 приглашённых через 7 дней в канале осталось 170. Какое удержание?",o:[["75%"],["80%"],["85%"],["90%"]],a:2},
+ {q:"Задача: клиент пишет «дорого». Какой ответ лучше?",o:[["«Дешевле не найдёте»"],["«Хорошо, сделаю скидку»"],["«Понимаю. С чем сравниваете?»"],["«Тогда до свидания»"]],a:2}
+];
+const FREE=[["Что такое ELI_S team и как здесь зарабатывают","3 мин"],["Как устроен диалог с клиентом","3 мин"],["Один день из жизни инвайтера и переписчика","4 мин"]];
+const OB={step:0,seen:new Set(),i:0,ans:[],dir:null,form:{h:"4–6 часов",exp:"Немного",goal:"Заработок",age:"25–34"},status:"wait"};
+const STEPS=["Знакомство","Уроки","Тест","Заявка"];
+function obRes(){const c={inv:0,msg:0,call:0,lead:0};OB.ans.slice(0,8).forEach((a,k)=>{const d=RQ[k].o[a][1];if(d)c[d]++});
+ const smart=[8,9].filter(k=>OB.ans[k]===RQ[k].a).length;const top=Object.keys(c).sort((a,b)=>c[b]-c[a])[0];return{c,smart,top}}
+V.start=()=>{const st=OB.step;return `<div class="full ob">
+ ${st<4?`<div class="obsteps">${STEPS.map((n,k)=>`<div class="${k<st?"d":k===st?"c":""}"><i></i><span>${n}</span></div>`).join("")}</div>`:""}
+ ${[obWelcome,obLessons,obTest,obForm,obWait][st]()}</div>`};
+function obWelcome(){return `
+ <div class="tgchat"><div class="tgbody" style="min-height:0;max-height:none">
+  <div class="msg me">/start<span class="tm">10:02</span></div>
+  <div class="msg">Привет! Это ELI_S team: учим продавать и сразу даём заказы. Тебя пригласил <b>Артём К.</b><span class="tm">10:02</span></div>
+  <div class="kb" style="grid-template-columns:1fr"><button data-obgo="1">Открыть ELI_S team</button></div></div></div>
+ <section class="card hero"><span class="lbl">ELI_S team</span><h2 class="disp hero-t">Учись продавать и сразу зарабатывай на заказах</h2>
+  <div class="list" style="margin-top:12px">${[["Учишься бесплатно","короткие уроки по 2–5 минут, тесты и разборы"],["Берёшь заказы","инвайтинг, переписка, звонки, лидген"],["Получаешь за результат","выплаты раз в неделю, всё прозрачно"]].map(([a,b],k)=>`<div class="item"><span class="mono xs" style="width:18px;color:var(--acc)">0${k+1}</span><div class="grow"><b>${a}</b><span class="xs mute">${b}</span></div></div>`).join("")}</div>
+  <button class="btn pri w" style="margin-top:12px" data-obgo="1">Начать · 10 минут</button>
+  <div class="xs mute" style="text-align:center;margin-top:8px">Дальше: 3 коротких урока, тест на роль и анкета. Ответ придёт в бот.</div></section>`}
+function obLessons(){const n=OB.seen.size;return `
+ <div><h2 class="disp" style="font-size:24px">Три коротких урока</h2><p class="sm mute" style="margin:6px 0 0">Посмотри хотя бы два, чтобы понять, чем здесь занимаются.</p></div>
+ <section class="card" style="padding-block:4px"><div class="list">${FREE.map(([t,d],k)=>`<button class="lesson ${OB.seen.has(k)?"d":""}" data-oblesson="${k}" style="padding:14px 0"><span class="n">${OB.seen.has(k)?"✓":k+1}</span><span class="grow"><b class="sm" style="font-weight:600;display:block">${t}</b><span class="xs mute">${d}${OB.seen.has(k)?" · просмотрено":""}</span></span><span class="pl" style="width:32px;height:32px">${I.play}</span></button>`).join("")}</div></section>
+ <div class="bar a"><i style="width:${n/3*100}%"></i></div>
+ <button class="btn pri w" data-obgo="2" ${n<2?"disabled":""}>${n<2?`Посмотри ещё ${2-n}`:"Дальше: тест на роль"}</button>`}
+function obTest(){if(OB.i>=RQ.length)return obResult();const q=RQ[OB.i];return `
+ <div class="btw"><span class="lbl">Вопрос ${OB.i+1} из ${RQ.length}</span>${OB.i?`<button class="link" data-obback>← Назад</button>`:""}</div>
+ <div class="pips">${RQ.map((_,k)=>`<i class="${k<OB.i?"ok":k===OB.i?"cur":""}"></i>`).join("")}</div>
+ <h2 class="disp" style="font-size:clamp(19px,4.6vw,24px);line-height:1.25">${q.q}</h2>
+ <div style="display:grid;gap:8px">${q.o.map((o,k)=>`<button class="opt ${OB.ans[OB.i]===k?"ok":""}" data-obans="${k}"><span class="k">${"АБВГ"[k]}</span><span class="grow">${o[0]}</span></button>`).join("")}</div>
+ ${OB.i>=8?`<div class="xs mute">Это мини-задача на сообразительность: тут есть верный ответ.</div>`:`<div class="xs mute">Верных ответов нет, выбирай, как есть на самом деле.</div>`}`}
+function obResult(){const {c,smart,top}=obRes();OB.dir=OB.dir||top;return `
+ <section class="card hero"><span class="lbl">Результат теста</span><h2 class="disp hero-t">Тебе подходит: ${DIRS[top]}</h2><p class="sm mute" style="margin:6px 0 0">${DIRD[top]}.</p>
+  <div style="display:grid;gap:10px;margin-top:16px">${Object.keys(DIRS).sort((a,b)=>c[b]-c[a]).map(d=>`<div><div class="btw sm"><span>${DIRS[d]}</span><span class="mono xs">${Math.round(c[d]/8*100)}%</span></div><div class="bar ${d===top?"a":""}" style="margin-top:6px"><i style="width:${c[d]/8*100}%"></i></div></div>`).join("")}</div>
+  <div class="row" style="margin-top:14px;gap:8px;flex-wrap:wrap"><span class="tag ${smart===2?"ok":smart?"warn":"bad"}">Задачи на сообразительность: ${smart}/2</span></div></section>
+ <button class="btn pri w" data-obgo="3">Дальше: анкета</button><button class="btn w" data-obretry>Пройти тест заново</button>`}
+function obForm(){const f=OB.form,ch=(k,list)=>`<div class="chips" data-obf="${k}">${list.map(v=>`<button type="button" class="${f[k]===v?"on":""}" data-obv="${v}">${v}</button>`).join("")}</div>`;return `
+ <div><h2 class="disp" style="font-size:24px">Анкета</h2><p class="sm mute" style="margin:6px 0 0">2 минуты. Имя и Telegram подтянули из профиля.</p></div>
+ <form class="card stack" id="obForm">
+  <div class="row"><div class="ava h2">НВ</div><div class="grow"><b class="sm" style="font-weight:600;display:block">Никита В.</b><span class="xs mute">@nikita_v · из Telegram</span></div></div>
+  <div class="field"><label>Направление</label><div class="chips" data-obf="dir">${Object.entries(DIRS).map(([k,n])=>`<button type="button" class="${OB.dir===k?"on":""}" data-obv="${k}">${n}${k===obRes().top?" · по тесту":""}</button>`).join("")}</div></div>
+  <div class="field"><label>Возраст</label>${ch("age",["18–24","25–34","35+"])}</div>
+  <div class="field"><label>Сколько часов в день готов работать</label>${ch("h",["2–3 часа","4–6 часов","6+ часов"])}</div>
+  <div class="field"><label>Опыт в продажах или работе с клиентами</label>${ch("exp",["Нет","Немного","Есть"])}</div>
+  <div class="field"><label>Зачем тебе это</label>${ch("goal",["Заработок","Навык","И то и другое"])}</div>
+  <div class="field"><label for="ob1">Пара слов о себе · необязательно</label><textarea class="inp" id="ob1" placeholder="Например: работаю днём, свободен с 18:00"></textarea></div>
+  <label class="row sm" style="gap:10px;cursor:pointer"><input type="checkbox" id="ob18" style="width:18px;height:18px;accent-color:var(--acc)"> Мне есть 18 лет, согласен с правилами команды</label>
+  <button class="btn pri w" type="submit">Отправить заявку</button></form>`}
+function obWait(){const s=OB.status,{top}=obRes();const T={wait:["Заявка на рассмотрении","Обычно отвечаем за 1–2 дня. Ответ придёт в бот.","warn"],ok:["Ты в команде","Добро пожаловать! Открылась Академия: начни с общего блока.","ok"],list:["Лист ожидания","Сейчас мест в направлении нет. Напишем, как только освободится.","acc"],no:["Пока не подходит","Можно подать заявку снова через 30 дней, 14 декабря.","bad"]}[s];
+ return `
+ <section class="card hero"><span class="tag ${T[2]}">${T[0]}</span><h2 class="disp hero-t">${s==="ok"?"Никита, ты в команде":s==="wait"?"Заявка отправлена":T[0]}</h2><p class="sm mute" style="margin:6px 0 0">${T[1]}</p>
+  <ol class="ladder" style="margin-top:16px">${[["Заявка отправлена","15 ноября, 10:14"],["Рассматривают",s==="wait"?"сейчас":"готово"],["Ответ в боте",s==="wait"?"обычно 1–2 дня":"пришёл"]].map(([a,b],k)=>`<li class="${(s==="wait"&&k<1)||(s!=="wait")?"dn":""}"><b>${a}</b><span class="xs mute">${b}</span></li>`).join("")}</ol>
+  ${s==="ok"?`<button class="btn pri w" data-obdone>Открыть Академию</button>`:""}</section>
+ <div class="tgchat"><div class="tgbody" style="min-height:0;max-height:none"><div class="msg">${s==="wait"?`Заявка принята: ${DIRS[OB.dir||top]}, ${OB.form.h}. Ответим в течение 1–2 дней.`:s==="ok"?"Заявка одобрена! Академия открыта, первый урок уже ждёт.":s==="list"?"Ты в листе ожидания. Напишем, когда освободится место.":"Спасибо за заявку. Сейчас не готовы взять, но через 30 дней можно подать снова."}<span class="tm">10:14</span></div></div></div>
+ <section class="card"><h3 class="h3">Пока ждёшь</h3><div class="list" style="margin-top:4px">${artRow(ARTS[2])}${artRow(ARTS[3])}</div></section>
+ <section class="card"><span class="lbl">Только для демо</span><div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap">${[["wait","Ждёт"],["ok","Одобрили"],["list","Лист ожидания"],["no","Отказ"]].map(([k,n])=>`<button class="btn s ${s===k?"pri":""}" data-obst="${k}">${n}</button>`).join("")}</div></section>`}
+function obDraw(){render();scrollTo({top:0})}
+document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t||S.route!=="start")return;const d=t.dataset;
+ if("obexit" in d){go("admin");return}
+ if(d.obgo){OB.step=+d.obgo;if(OB.step===2&&OB.i>=RQ.length)OB.i=RQ.length;obDraw();return}
+ if(d.oblesson!==undefined){const k=+d.oblesson;sheet(`<div class="stack"><span class="lbl">Бесплатный урок ${k+1} · ${FREE[k][1]}</span><h3 id="sheetTitle">${FREE[k][0]}</h3><div style="aspect-ratio:16/9;max-width:100%;border-radius:14px;background:radial-gradient(70% 90% at 15% 10%,rgba(224,122,79,.45),transparent 60%),#121216;display:grid;place-items:center"><span class="pl" style="width:56px;height:56px;background:#fff;color:#111">${I.play}</span></div><button class="btn pri w" data-obseen="${k}">Посмотрел</button></div>`);return}
+ if(d.obseen!==undefined){OB.seen.add(+d.obseen);close();obDraw();return}
+ if(d.obans!==undefined){OB.ans[OB.i]=+d.obans;t.classList.add("ok");setTimeout(()=>{OB.i++;if(OB.i>=RQ.length)OB.dir=null;obDraw()},220);return}
+ if("obback" in d){OB.i=Math.max(0,OB.i-1);obDraw();return}
+ if("obretry" in d){OB.i=0;OB.ans=[];OB.dir=null;obDraw();return}
+ if(d.obv){const g=t.parentNode.dataset.obf;if(g==="dir")OB.dir=d.obv;else OB.form[g]=d.obv;t.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===t));return}
+ if(d.obst){OB.status=d.obst;obDraw();return}
+ if("obdone" in d){OB.step=0;go("kb","course");toast("Добро пожаловать в команду");return}
+});
+document.addEventListener("submit",e=>{if(e.target.id!=="obForm")return;e.preventDefault();e.stopPropagation();
+ if(!$("#ob18").checked){toast("Подтверди, что тебе есть 18");return}OB.step=4;OB.status="wait";obDraw();toast("Заявка отправлена")},true);
 
 (()=>{try{const th=localStorage.getItem("elis-theme");if(th)document.documentElement.dataset.theme=th}catch(_){}const h=location.hash.slice(1);S.route=V[h]?h:"home";render()})();
 </script>

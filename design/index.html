@@ -284,6 +284,32 @@ td{padding:10px 4px;border-top:1px solid var(--line);font-variant-numeric:tabula
 .lb-b{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:22px;flex:none;display:grid;place-items:center}
 .lb-x{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px))}
 @media (min-width:960px){.sticky{position:sticky;top:84px}}
+/* voice */
+.vscrim{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:95;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+.vscrim.on{opacity:1;visibility:visible}
+.voice{position:fixed;left:50%;bottom:0;z-index:96;width:min(560px,100%);background:var(--s1);border-radius:22px 22px 0 0;padding:10px max(20px,env(safe-area-inset-right,0px)) calc(22px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));transform:translate(-50%,104%);visibility:hidden;transition:transform .35s var(--ease),visibility .35s}
+.voice.on{transform:translate(-50%,0);visibility:visible}
+.mic-big{width:76px;height:76px;border-radius:50%;background:var(--acc);color:var(--acc-ink);display:grid;place-items:center;position:relative;margin:4px 0}
+.mic-big svg{width:30px;height:30px}
+.mic-big.on::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--acc);animation:ring 1.4s ease-out infinite}
+@keyframes ring{from{transform:scale(.92);opacity:.8}to{transform:scale(1.35);opacity:0}}
+.vwave{display:flex;gap:3px;height:34px;align-items:center}
+.vwave i{width:4px;height:100%;border-radius:2px;background:var(--acc);transform:scaleY(.2);animation:wv 1s ease-in-out infinite;animation-delay:calc(var(--d) * -1s)}
+.vwave.idle i{animation:none;transform:scaleY(.12);background:var(--dim)}
+@keyframes wv{0%,100%{transform:scaleY(.2)}50%{transform:scaleY(1)}}
+.vtext{min-height:3em;font-size:17px;line-height:1.45;max-width:46ch;text-wrap:pretty}
+.vtext .cur::after{content:"";display:inline-block;width:2px;height:1.1em;vertical-align:-3px;margin-left:2px;background:var(--acc);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.fab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:55;width:52px;height:52px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.22);transition:transform .2s var(--ease),opacity .2s}
+.fab:hover{transform:scale(1.06)}
+.fab svg{width:22px;height:22px}
+.sheet.on~.fab,.voice.on~.fab{opacity:0;pointer-events:none}
+@media (min-width:960px){.fab{bottom:28px;right:max(28px,env(safe-area-inset-right,0px))}}
+.nrow{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:center;padding:8px 0}
+.nd{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--dim);display:grid;place-items:center}
+.nd svg{width:12px;height:12px}
+.nd.ok{background:var(--ok);border-color:var(--ok);color:var(--s1)}
+.nd.late{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 15%,transparent)}
 /* subs */
 .cbar .sp.on{background:#fff;color:#111}
 .subs{position:absolute;left:50%;transform:translateX(-50%);bottom:62px;max-width:88%;width:max-content;background:rgba(0,0,0,.75);color:#fff;padding:5px 12px;border-radius:6px;font-size:15px;line-height:1.35;text-align:center}
@@ -551,13 +577,14 @@ function postCard(p){const u=S.useful.has(p.id);return `<article class="card pos
 /* ---------- экраны ---------- */
 const V={};
 V.home=()=>`
-<section class="full card hero"><div class="lbl">Суббота, 15 ноября</div><h2 class="disp hero-t">Добрый день, Артём</h2><p class="sm mute" style="margin:6px 0 16px;max-width:52ch">Сегодня: отчёт по инвайтингу до 21:00 и урок 7 про прогрев. Это 6 минут видео и короткий тест.</p><div class="row" style="flex-wrap:wrap;gap:8px"><button class="btn pri" data-openlesson="6">${I.play} Продолжить урок 7</button><button class="btn" data-order="o1">Сдать отчёт</button></div></section>
+<section class="full card hero"><div class="lbl">Суббота, 15 ноября</div><h2 class="disp hero-t">Привет, Артём</h2><p class="sm mute" style="margin:6px 0 16px;max-width:52ch">По норме сегодня 40 инвайтов и отчёт до 21:00. Урок 7 — шесть минут видео, успеешь между делом.</p><div class="row" style="flex-wrap:wrap;gap:8px"><button class="btn pri" data-openlesson="6">${I.play} Продолжить урок 7</button><button class="btn" data-order="o1">Сдать отчёт</button></div></section>
 <div class="sec">
  <div class="stats">${stat("Заработано","38 400 ₽","ноябрь · +12%")}${stat("К выплате","12 600 ₽","20 ноября")}${stat("В работе","2 заказа","1 ждёт отчёт")}</div>
  <section class="card"><div class="btw"><h3 class="h3">На сегодня</h3><span class="row" style="gap:12px"><span class="xs mute mono" id="todoCnt"></span>${more("План","plan")}</span></div><div class="list" id="todos" style="margin-top:4px"></div></section>
  <section class="card"><div class="btw"><h3 class="h3">Мои заказы</h3>${more("Все","orders","mine")}</div><div class="list">${MY.map(myOrder).join("")}</div></section>
 </div>
 <div class="sec">
+ ${normsHTML()}
  <section class="card pin"><span class="lbl">Закреплено · админ</span><h3 class="h3" style="margin:6px 0 4px">Новый заказ на инвайтинг: 6 мест</h3><p class="sm mute" style="margin:0 0 12px">Канал студии ремонта, 18 ₽ за участника. Приоритет тем, у кого удержание выше 85%.</p><button class="btn s" data-order="o1">Открыть заказ</button></section>
  <section class="card"><div class="btw"><h3 class="h3">Новое в базе</h3>${more("База","kb")}</div><div class="list">${ARTS.slice(0,3).map(artRow).join("")}</div></section>
  <section class="card"><div class="btw"><h3 class="h3">Обсуждают</h3>${more("Сообщество","com")}</div>
@@ -699,14 +726,14 @@ function reportSheet(id){const o=ORDERS.find(x=>x.id===id);const inv=o.type==="�
  <div class="kv"><div class="field"><label for="r1">${inv?"Приглашено":"Обработано заявок"}</label><input class="inp mono" id="r1" inputmode="numeric" value="${inv?64:12}"></div><div class="field"><label for="r2">${inv?"Чатов-источников":"Оплат"}</label><input class="inp mono" id="r2" inputmode="numeric" value="${inv?7:2}"></div></div>
  ${inv?`<div class="field"><label for="r3">Источники</label><input class="inp" id="r3" value="ЖК Минск-Мир, ЖК Новая Боровая, барахолка стройматериалов"></div>`:""}
  ${up("Прикрепи скрин или выгрузку")}
- <div class="field"><label for="r5">Комментарий</label><textarea class="inp" id="r5" placeholder="Что сработало, что нет"></textarea></div>
+ <div class="field"><label for="r5">Комментарий</label><textarea class="inp" id="r5" placeholder="Что сработало, что нет"></textarea><button type="button" class="btn s" data-mic="r5" data-sample="report" style="justify-self:start">${I.mic} Надиктовать</button></div>
  <button class="btn pri w" type="submit">Отправить отчёт</button></form>`)}
 const upHint={"Звонок":"Аудио звонка: mp3, m4a, ogg","Переписка":"Скрины переписки или экспорт чата","Кейс":"Файл, таблица или скрин","Вопрос":"Скрин, если нужен (необязательно)"};
 function composeSheet(type){
  sheet(`<form class="stack" id="postForm"><h3 id="sheetTitle">Новая публикация</h3>
  <div class="seg" id="ptype">${["Звонок","Переписка","Кейс","Вопрос"].map(t=>`<button type="button" class="${t===type?"on":""}" data-ptype="${t}">${t}</button>`).join("")}</div>
  <div class="field"><label for="pt">Заголовок</label><input class="inp" id="pt" placeholder="Например: клиент пропал после цены, вернул так"></div>
- <div class="field"><label for="px">Что разобрать</label><textarea class="inp" id="px" placeholder="Контекст, таймкод важного момента, что хочешь услышать"></textarea></div>
+ <div class="field"><label for="px">Что разобрать</label><textarea class="inp" id="px" placeholder="Контекст, таймкод важного момента, что хочешь услышать"></textarea><button type="button" class="btn s" data-mic="px" data-sample="compose" style="justify-self:start">${I.mic} Надиктовать</button></div>
  ${up(upHint[type])}
  <div class="note">${I.shield}<span>Перед публикацией скрой телефоны, фамилии и названия компаний клиентов. Посты с открытыми данными модератор скроет.</span></div>
  <div class="field"><label for="ptag">Теги</label><input class="inp" id="ptag" placeholder="инвайтинг, возражения"></div>
@@ -872,7 +899,7 @@ function renderPane(){const el=$("#lpane");if(!el)return;const k=S.ltab;
  <div class="task" style="margin-top:14px"><b style="display:block;margin-bottom:4px">Задание к уроку</b>Возьми три своих последних диалога, найди место, где ты назвал цену, и перепиши его по схеме из урока. Наставник проверит в течение дня.</div>`;
  else if(k==="mat")el.innerHTML=`<div class="list">${[["Чек-лист прогрева","PDF · 2 страницы",I.doc],["12 вопросов для квалификации","Шаблоны · можно копировать",I.msg],["Переписка из урока","3 скрина · данные скрыты",I.doc]].map(([t,d,i])=>`<button class="art" data-toast="«${t}» откроется в Telegram"><span class="ic" style="--h:var(--info)">${i}</span><span class="grow"><b>${t}</b><span class="xs mute">${d}</span></span></button>`).join("")}${artRow(ARTS[2])}</div>`;
  else if(k==="notes"){el.innerHTML=`<div class="btw" style="flex-wrap:wrap;margin-bottom:10px"><span class="private">${I.lock} Видно только тебе</span><button class="btn s" data-share>${I.share} Поделиться конспектом</button></div>
- <div class="notes-box"><textarea class="inp" id="nt" placeholder="Мысль, вопрос к наставнику, фраза, которую хочешь забрать"></textarea><div class="row" style="margin-top:8px;flex-wrap:wrap;gap:8px"><button class="btn s" id="ntcBtn" data-ntc></button><span class="xs mute grow">тайм-код привяжет заметку к моменту видео</span><button class="btn s pri" data-nsave>Сохранить</button></div></div>
+ <div class="notes-box"><textarea class="inp" id="nt" placeholder="Мысль, вопрос к наставнику, фраза, которую хочешь забрать"></textarea><div class="row" style="margin-top:8px;flex-wrap:wrap;gap:8px"><button class="btn s" data-mic="nt" data-sample="note" aria-label="Надиктовать заметку">${I.mic}</button><button class="btn s" id="ntcBtn" data-ntc></button><span class="xs mute grow">тайм-код привяжет заметку к моменту видео</span><button class="btn s pri" data-nsave>Сохранить</button></div></div>
  <div class="list" style="margin-top:6px">${S.notes.length?S.notes.map((n,j)=>`<div class="nitem">${n.t!=null?`<button class="tc" data-seek="${n.t}" aria-label="Перейти к ${fmtT(n.t)}">${fmtT(n.t)}</button>`:`<span class="tc" style="opacity:.45">––:––</span>`}<div class="grow sm" style="line-height:1.45">${esc(n.x)}</div><button class="ndel" data-ndel="${j}" aria-label="Удалить заметку">✕</button></div>`).join(""):`<div class="empty">Пока пусто. Поставь тайм-код и запиши мысль. Заметка появится здесь и жёлтой точкой на шкале видео.</div>`}</div>`;renderNtc()}
  else if(k==="tr")renderTr(el);
  else el.innerHTML=`<div class="list">${[["КМ","Катя М.","А если клиент сам сразу пишет «дайте цену, остальное не важно»?","МС","Назови вилку и сразу задай вопрос: «От 590 до 890 BYN, зависит от формата. Вам важнее скорость или поддержка наставника?»"],["ОН","Олег Н.","Работает ли это в звонках или только в переписке?","МС","Работает и в звонках. Там вопросы короче, а паузу после вопроса держи дольше."]].map(([a,w,q,b,ans])=>`<div style="padding:12px 0;display:grid;gap:8px"><div class="row" style="align-items:flex-start"><div class="ava ${hue(a)}">${a}</div><div class="grow"><b class="sm" style="font-weight:600">${w}</b><div class="sm">${q}</div></div></div><div class="row" style="align-items:flex-start;padding-left:46px"><div class="ava h2" style="width:28px;height:28px;font-size:11px">${b}</div><div class="grow sm mute">${ans}</div></div></div>`).join("")}</div>
@@ -1172,7 +1199,7 @@ function dayHTML(){const ts=PD.tasks.filter(x=>x.day===PD.sel),timed=ts.filter(x
  const nh=nowH();
  return headHTML()+weekStrip()+`
 <div class="sec">
- <section class="card"><form class="qadd" id="qaddForm" autocomplete="off"><input class="inp" id="qaddIn" placeholder="Например: «инвайт 40 человек до 18:00» или «урок 8 завтра в 12»" aria-label="Новая задача"><button class="btn pri" type="submit" aria-label="Добавить задачу">${I.plus}</button></form><div id="qaddHint" class="row xs mute" style="margin-top:8px;gap:6px;flex-wrap:wrap">Время и день распознаются из текста</div></section>
+ <section class="card"><form class="qadd" id="qaddForm" autocomplete="off"><input class="inp" id="qaddIn" placeholder="Например: «инвайт 40 человек до 18:00» или «урок 8 завтра в 12»" aria-label="Новая задача"><button class="btn" type="button" data-mic="qaddIn" data-sample="plan" aria-label="Сказать голосом">${I.mic}</button><button class="btn pri" type="submit" aria-label="Добавить задачу">${I.plus}</button></form><div id="qaddHint" class="row xs mute" style="margin-top:8px;gap:6px;flex-wrap:wrap">Время и день распознаются из текста</div></section>
  <section class="card"><div class="btw"><h3 class="h3">Расписание</h3><span class="xs mute hide-m">нажми на пустое время, чтобы добавить задачу</span></div>
   <div class="tgrid" id="tgrid" style="height:${(H1-H0)*HOUR}px;--hr:${HOUR}px">
    ${Array.from({length:H1-H0},(_,k)=>`<span class="hl" style="top:${k*HOUR}px">${String(H0+k).padStart(2,"0")}:00</span>`).join("")}
@@ -1182,6 +1209,7 @@ function dayHTML(){const ts=PD.tasks.filter(x=>x.day===PD.sel),timed=ts.filter(x
   </div></section>
 </div>
 <div class="sec sticky">
+ ${normsHTML()}
  <section class="card focus"><div class="btw"><h3 class="h3">Фокус</h3><div class="seg">${[["focus","25 мин"],["break","Перерыв"]].map(([k,n])=>`<button class="${FO.mode===k?"on":""}" data-fmode="${k}">${n}</button>`).join("")}</div></div>
   <div class="fbig" id="fTime">${fmtT(FO.left)}</div><div class="bar a"><i id="fBar" style="width:${(1-FO.left/(FO.mode==="focus"?1500:300))*100}%"></i></div>
   <div class="row" style="margin-top:12px;gap:8px;flex-wrap:wrap"><button class="btn pri" data-frun id="fRun">${FO.run?I.pause+" Пауза":I.play+" Старт"}</button><button class="btn" data-freset>Сбросить</button><span class="grow"></span><span class="xs mute">сегодня ${FO.blocks} блока · ${durTxt(focusMin/60)}</span></div></section>
@@ -1203,13 +1231,13 @@ function weekHTML(){const all=PD.tasks,dn=all.filter(t=>t.done).length;
 function bindPlan(){const i=$("#qaddIn");if(i)i.oninput=()=>{const p=parseQ(i.value);$("#qaddHint").innerHTML=i.value.trim()?[DAYSF[p.day],p.start!=null?(p.dl?"до ":"в ")+fmtH(p.dl?p.start+.25:p.start):"без времени",PCAT[p.cat][0]].map((x,k)=>`<span class="tag ${k===2?PCAT[p.cat][1]:""}">${x}</span>`).join(""):"Время и день распознаются из текста"};
  const g=$("#tgrid");if(g)g.onclick=e=>{if(e.target!==g&&!e.target.classList.contains("hl"))return;const r=g.getBoundingClientRect();const h=Math.floor(((e.clientY-r.top)/HOUR+H0)*2)/2;taskSheet(null,{day:PD.sel,start:Math.min(h,H1-.5)})}}
 function parseQ(s){let day=PD.view==="day"?PD.sel:TODAY,start=null,dl=false,dur=1;const l=s.toLowerCase();
- if(/послезавтра/.test(l))day=Math.min(day+2,6);else if(/завтра/.test(l))day=Math.min(day+1,6);
+ if(/послезавтра/.test(l))day=Math.min(TODAY+2,6);else if(/завтра/.test(l))day=Math.min(TODAY+1,6);else if(/сегодня/.test(l))day=TODAY;
  DAYS.forEach((d,k)=>{if(new RegExp("(^|\\s)(в|во)\\s+"+DAYSF[k].toLowerCase().slice(0,3)).test(l))day=k});
  let m=l.match(/до\s*(\d{1,2})(?::(\d{2}))?/);if(m){start=+m[1]+(+(m[2]||0))/60-.25;dl=true;dur=.25}
  else{m=l.match(/(?:^|\s)(?:в|с|на)\s*(\d{1,2})(?::(\d{2}))?(?!\s*(?:человек|чел|прил|инвайт|%))/);if(m&&+m[1]<24)start=+m[1]+(+(m[2]||0))/60}
  const cat=/урок|тест|курс|конспект/.test(l)?"study":/созвон|встреч|разбор|сходк/.test(l)?"event":/инвайт|заявк|отч[её]т|звон|лид|рассыл|заказ|клиент/.test(l)?"order":"own";
  const n=l.match(/(\d+)\s*(человек|чел|приглаш|инвайт)/);
- const t=s.replace(/\s*(послезавтра|завтра)\s*/i," ").replace(/\s*(до|в|с|на)\s*\d{1,2}(:\d{2})?\s*$/i,"").trim();
+ const t=s.replace(/^\s*(добавь|добавить|поставь)\s+задачу:?\s*/i,"").replace(/(послезавтра|завтра|сегодня)/gi," ").replace(/(^|\s)(в|во)\s+(понедельник|вторник|среду|четверг|пятницу|субботу|воскресенье)/gi," ").replace(/(^|\s)(до|в|с|на)\s*\d{1,2}(:\d{2})?(?!\s*(человек|чел|приглаш))/gi," ").replace(/\s+/g," ").trim();
  return{day,start,dl,dur,cat,t:t.charAt(0).toUpperCase()+t.slice(1),count:n?{v:0,max:+n[1],u:"приглашений"}:null}}
 function taskSheet(id,preset){const t=id?PD.tasks.find(x=>x.id===id):null;PD.edit=t?{...t}:T(preset.day,preset.start??null,1,"own","",{});
  const e=PD.edit;
@@ -1259,6 +1287,61 @@ document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)r
  if(d.prem){const k="r"+d.prem;PD[k]=PD[k]===false;t.querySelector(".sw").classList.toggle("on",PD[k]!==false);t.setAttribute("aria-checked",PD[k]!==false);return}
 });
 document.addEventListener("change",e=>{const t=e.target;if(t.dataset.subs===undefined||!t.closest("#edMain"))return;ld(E.sel).subs=t.dataset.subs;renderEdPane();markSaving()});
+
+/* ---------- голосовой ввод ---------- */
+/* Прототип имитирует распознавание. В приложении: Web Speech API где он есть, иначе запись → сервер → распознавание. Плюс голосовые сообщения боту. */
+I.mic=ic('<rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/>');
+const VS={plan:["Завтра в 11 созвон с заказчиком по стоматологии"],note:["На второй минуте хороший пример вопроса с выбором, забрать в свой скрипт"],
+ report:["Сегодня пригласил 64 человека, лучше всего зашли чаты новостроек, в одном чате удалили сообщения"],compose:["Клиент пропал после цены, я отправил кейс похожего клиента, и он вернулся через день"],
+ global:["Добавь задачу: в пятницу до 18:00 сдать отчёт по фитнес-клубам","Вопрос наставнику: что отвечать, если клиент сразу просит скидку"]};
+const VO={target:null,kind:"",text:"",timer:null,gi:0};
+document.body.insertAdjacentHTML("beforeend",`<div class="vscrim" id="vscrim"></div><div class="voice" id="voice" role="dialog" aria-modal="true" aria-label="Голосовой ввод"><div class="grab"></div><div id="vbody"></div></div><button class="fab" id="fab" data-mic="" data-sample="global" aria-label="Сказать голосом">${I.mic}</button>`);
+function openVoice(target,kind){VO.target=target||null;VO.kind=kind;VO.text="";
+ const list=VS[kind]||VS.global,sample=kind==="global"?list[VO.gi++%list.length]:list[0];
+ $("#vbody").innerHTML=`<div class="stack" style="justify-items:center;text-align:center">
+ <span class="lbl" id="vlbl">Говори, я слушаю</span>
+ <button class="mic-big on" id="vmic" data-vstop aria-label="Остановить запись">${I.mic}</button>
+ <div class="vwave" id="vwave">${Array.from({length:28},(_,k)=>`<i style="--d:${(k*37%100)/100}"></i>`).join("")}</div>
+ <div class="vtext" id="vtext"><span class="cur"></span></div>
+ <div id="vact" class="row" style="gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn" data-vcancel>Отмена</button></div>
+ <span class="xs mute">${kind==="global"?"Скажи «добавь задачу…» или «вопрос наставнику…»":"Текст попадёт в поле, его можно поправить"}</span></div>`;
+ $("#voice").classList.add("on");$("#vscrim").classList.add("on");
+ const words=sample.split(" ");let k=0;clearInterval(VO.timer);
+ VO.timer=setInterval(()=>{if(k>=words.length){vStop();return}VO.text+=(k?" ":"")+words[k++];$("#vtext").innerHTML=esc(VO.text)+'<span class="cur"></span>'},matchMedia("(prefers-reduced-motion: reduce)").matches?40:170)}
+function vStop(){clearInterval(VO.timer);const m=$("#vmic");if(!m)return;m.classList.remove("on");m.dataset.vagain="";delete m.dataset.vstop;m.setAttribute("aria-label","Записать заново");
+ $("#vwave").classList.add("idle");$("#vlbl").textContent=VO.text?"Распознано":"Ничего не услышал";$("#vtext").innerHTML=esc(VO.text)||'<span class="mute">Попробуй ещё раз</span>';
+ if(VO.kind==="global"&&VO.text){vIntent();return}
+ $("#vact").innerHTML=`<button class="btn" data-vagain>Заново</button>${VO.text?`<button class="btn pri" data-vdone>Вставить</button>`:""}`}
+function vIntent(){const t=VO.text,q=/вопрос/i.test(t);
+ if(q){$("#vact").innerHTML=`<div class="card" style="width:100%;text-align:left;padding:12px"><span class="tag acc">Вопрос в сообщество</span><div class="sm" style="margin-top:8px">${esc(t.replace(/^вопрос наставнику:?\s*/i,""))}</div></div><button class="btn" data-vagain>Заново</button><button class="btn pri" data-vask>Задать вопрос</button>`;return}
+ const p=parseQ(t);VO.p=p;
+ $("#vact").innerHTML=`<div class="card" style="width:100%;text-align:left;padding:12px"><b class="sm" style="font-weight:600;display:block">${esc(p.t)}</b><div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap">${[DAYSF[p.day],p.start!=null?(p.dl?"до ":"в ")+fmtH(p.dl?p.start+.25:p.start):"без времени",PCAT[p.cat][0]].map((x,k)=>`<span class="tag ${k===2?PCAT[p.cat][1]:""}">${x}</span>`).join("")}</div></div><button class="btn" data-vagain>Заново</button><button class="btn pri" data-vtask>Добавить в план</button>`}
+function vClose(){clearInterval(VO.timer);$("#voice").classList.remove("on");$("#vscrim").classList.remove("on")}
+$("#vscrim").onclick=vClose;
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#voice").classList.contains("on"))vClose()});
+document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;const d=t.dataset;
+ if(d.mic!==undefined){e.preventDefault();openVoice(d.mic,d.sample);return}
+ if("vstop" in d){vStop();return}
+ if("vagain" in d){openVoice(VO.target,VO.kind==="global"?"global":VO.kind);return}
+ if("vcancel" in d){vClose();return}
+ if("vdone" in d){const el=VO.target&&document.getElementById(VO.target);vClose();if(!el){toast(VO.text);return}
+  el.value=(el.value.trim()?el.value.trim()+" ":"")+VO.text;el.dispatchEvent(new Event("input",{bubbles:true}));el.focus();toast("Текст вставлен");return}
+ if("vtask" in d){const p=VO.p;PD.tasks.push(T(p.day,p.start,p.dur,p.cat,p.t,{dl:p.dl,count:p.count}));vClose();PD.sel=p.day;PD.view="day";if(S.route==="plan")planDraw();else go("plan");toast("Добавлено в план: "+DAYS[p.day]);return}
+ if("vask" in d){vClose();const txt=VO.text.replace(/^вопрос наставнику:?\s*/i,"");composeSheet("Вопрос");setTimeout(()=>{const a=$("#pt");if(a)a.value=txt.charAt(0).toUpperCase()+txt.slice(1)},50);return}
+});
+
+/* ---------- норма дня ---------- */
+function normsHTML(){const ts=PD.tasks.filter(x=>x.day===TODAY),inv=ts.find(x=>x.count),rep=ts.find(x=>x.dl),nh=nowH(),left=21-nh,fm=FO.blocks*25;
+ const late=left<=0&&!(rep&&rep.done),lesson=LESSONS[6][2]==="d";
+ const rows=[
+  [inv&&inv.count.v>=inv.count.max,"Инвайты",inv?`${inv.count.v}/${inv.count.max}`:"—",inv?inv.count.v/inv.count.max:0],
+  [fm>=120,"Фокус-работа",`${durTxt(fm/60)} из 2 ч`,fm/120],
+  [rep&&rep.done,"Отчёт до 21:00",rep&&rep.done?"сдан":late?"просрочен":`через ${durTxt(Math.max(left,0))}`,null,late],
+  [lesson,"Урок 7 до воскресенья",lesson?"пройден":"6 минут видео",null]];
+ const ok=rows.filter(r=>r[0]).length;
+ return `<section class="card norm"><div class="btw"><h3 class="h3">Норма на сегодня</h3><span class="tag ${ok===rows.length?"ok":"acc"}">${ok}/${rows.length}</span></div>
+ <div style="margin-top:6px">${rows.map(([v,n,val,p,bad])=>`<div class="nrow"><span class="nd ${v?"ok":bad?"late":""}">${v?I.check:""}</span><div style="min-width:0"><div class="btw sm"><span>${n}</span><span class="mono xs" style="${bad?"color:var(--bad)":v?"color:var(--ok)":""}">${val}</span></div>${p!=null?`<div class="bar ${v?"":"a"}" style="height:4px;margin-top:6px"><i style="width:${Math.min(p,1)*100}%;${v?"background:var(--ok)":""}"></i></div>`:""}</div></div>`).join("")}</div>
+ <div class="xs mute" style="margin-top:8px">Норма закрыта 6 дней подряд. Всё, что сверх нормы, идёт в XP и рейтинг.</div></section>`}
 
 (()=>{try{const th=localStorage.getItem("elis-theme");if(th)document.documentElement.dataset.theme=th}catch(_){}const h=location.hash.slice(1);S.route=V[h]?h:"home";render()})();
 </script>

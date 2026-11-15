@@ -18,5 +18,7 @@ async def test_start_registers_with_referral_once():
     assert ref3 is None and self_ref.referrer_id is None
 
 
-async def test_transcribe_disabled_without_key():
+def test_api_engine_needs_key(monkeypatch):
+    from app.config import get_settings
+    monkeypatch.setattr(get_settings(), "transcribe_engine", "api")
     assert transcribe.enabled() is False

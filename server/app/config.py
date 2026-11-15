@@ -15,7 +15,13 @@ class Settings(BaseSettings):
     initdata_ttl: int = 86400
     cors_origins: str = "http://localhost:5173"
 
-    # Расшифровка голосовых: любой OpenAI-совместимый endpoint /audio/transcriptions
+    # Расшифровка голосовых: local — своя модель Whisper на сервере, api — внешний сервис, off — выключено
+    transcribe_engine: str = "local"
+    whisper_model: str = "small"  # small точнее, base быстрее и легче
+    whisper_threads: int = 2  # сколько ядер можно занять под расшифровку
+    whisper_idle_unload_min: int = 15  # выгрузить модель из памяти, если голосовых не было N минут
+    voice_max_sec: int = 180  # длиннее не расшифровываем, просим разбить
+    # Для engine=api: любой OpenAI-совместимый endpoint /audio/transcriptions
     transcribe_api_url: str = ""
     transcribe_api_key: str = ""
     transcribe_model: str = "whisper-1"

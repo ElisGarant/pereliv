@@ -76,13 +76,17 @@ async def set_role(user_id: int, body: RoleIn, admin: User = Depends(require("ad
 
 
 @router.post("/order-members/{member_id}/confirm")
-async def confirm_member(member_id: int, admin: User = Depends(require("manager")), session: AsyncSession = Depends(get_session)) -> dict:
+async def confirm_member(member_id: int, bg: BackgroundTasks, admin: User = Depends(require("manager")),
+                         session: AsyncSession = Depends(get_session)) -> dict:
+    from ..models import Order
     m = await session.get(OrderMember, member_id)
     if not m:
         raise HTTPException(404, "Отклик не найден")
     m.status = "active"
     session.add(AuditLog(actor_id=admin.id, action="order.confirm", payload={"member_id": m.id}))
     await session.commit()
+    u, o = await session.get(User, m.user_id), await session.get(Order, m.order_id)
+    bg.add_task(send_message, u.tg_id, f"Место в заказе «{o.title}» подтверждено. Можно начинать и сдавать отчёты.", "Открыть заказ")
     return {"status": m.status}
 
 
@@ -168,3 +172,48 @@ async def update_lesson(lesson_id: int, body: LessonIn, admin: User = Depends(re
         raise HTTPException(404, "Урок не найден")
     l = await save_lesson(session, l, body)
     return {"id": l.id, "youtube_id": l.youtube_id, "published": l.published}
+
+
+@router.get("/modules")
+async def admin_modules(admin: User = Depends(require("admin")), session: AsyncSession = Depends(get_session)) -> list[dict]:
+    mods = (await session.execute(select(Module).order_by(Module.position))).scalars().all()
+    out = []
+    for m in mods:
+        ls = (await session.execute(select(Lesson).where(Lesson.module_id == m.id).order_by(Lesson.position))).scalars().all()
+        out.append({"id": m.id, "title": m.title, "direction": m.direction, "is_free": m.is_free,
+                    "lessons": [{"id": l.id, "title": l.title, "published": l.published, "position": l.position} for l in ls]})
+    return out
+
+
+class ModuleIn(BaseModel):
+    title: str = Field(min_length=1, max_length=128)
+    direction: Literal["inv", "msg", "call", "lead"] | None = None
+    position: int = 0
+
+
+@router.post("/modules", status_code=201)
+async def create_module(body: ModuleIn, admin: User = Depends(require("admin")), session: AsyncSession = Depends(get_session)) -> dict:
+    m = Module(title=body.title, direction=body.direction, position=body.position, is_free=False)
+    session.add(m)
+    await session.commit()
+    return {"id": m.id}
+
+
+@router.get("/lessons/{lesson_id}")
+async def admin_lesson(lesson_id: int, admin: User = Depends(require("admin")), session: AsyncSession = Depends(get_session)) -> dict:
+    l = await session.get(Lesson, lesson_id)
+    if not l:
+        raise HTTPException(404, "Урок не найден")
+    qs = (await session.execute(select(QuizQuestion).where(QuizQuestion.lesson_id == l.id).order_by(QuizQuestion.position))).scalars().all()
+    return {"id": l.id, "module_id": l.module_id, "title": l.title, "position": l.position, "youtube": l.youtube_id or "",
+            "duration_sec": l.duration_sec, "chapters": l.chapters, "summary_md": l.summary_md, "task_text": l.task_text,
+            "materials": l.materials, "pass_score": l.pass_score, "retake_minutes": l.retake_minutes, "xp": l.xp, "published": l.published,
+            "questions": [{"text": q.text, "options": q.options, "correct": q.correct, "explanation": q.explanation} for q in qs]}
+
+
+@router.get("/order-members")
+async def order_members(status: str = "requested", admin: User = Depends(require("manager")), session: AsyncSession = Depends(get_session)) -> list[dict]:
+    from ..models import Order
+    rows = (await session.execute(select(OrderMember, User, Order).join(User, User.id == OrderMember.user_id)
+                                  .join(Order, Order.id == OrderMember.order_id).where(OrderMember.status == status).order_by(OrderMember.id))).all()
+    return [{"id": m.id, "user": user_out(u), "order": {"id": o.id, "title": o.title, "type": o.type}, "created_at": m.created_at.isoformat()} for m, u, o in rows]

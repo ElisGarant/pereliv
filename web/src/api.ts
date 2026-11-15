@@ -17,7 +17,10 @@ export async function api<T>(path: string, opts: { method?: string; body?: unkno
   const data = await r.json().catch(() => ({}));
   if (!r.ok) {
     const d = (data as { detail?: unknown }).detail;
-    throw new ApiError(r.status, typeof d === "string" ? d : "Что-то пошло не так. Попробуй ещё раз");
+    const msg = typeof d === "string" ? d
+      : Array.isArray(d) ? "Проверь поля: " + d.map((x: { loc?: unknown[]; msg?: string }) => `${(x.loc ?? []).slice(1).join(".")} ${x.msg ?? ""}`.trim()).join("; ")
+      : "Что-то пошло не так. Попробуй ещё раз";
+    throw new ApiError(r.status, msg);
   }
   return data as T;
 }

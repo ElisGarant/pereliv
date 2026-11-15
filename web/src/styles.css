@@ -127,3 +127,11 @@ input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--acc); fl
 .toast { position: fixed; left: 50%; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); opacity: 0; visibility: hidden; z-index: 30; background: var(--fg); color: var(--bg); padding: 11px 16px; border-radius: 12px; font-weight: 600; font-size: 14px; transition: all .3s; max-width: calc(100% - 32px) }
 .toast.on { transform: translate(-50%, 0); opacity: 1; visibility: visible }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important } }
+.title-inp { font: 600 20px var(--disp); letter-spacing: -.02em; background: transparent; border-color: transparent; padding: 6px 8px; margin: 0 -8px; width: calc(100% + 16px) }
+.title-inp:focus { background: var(--s2); border-color: var(--line) }
+select.inp { appearance: auto }
+.qcard { border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 8px }
+.optrow { display: grid; grid-template-columns: 22px minmax(0, 1fr) 28px; gap: 8px; align-items: center }
+.optrow input[type="radio"] { width: 18px; height: 18px; margin: 0; accent-color: var(--ok) }
+.inp.right { border-color: var(--ok) }
+.ndel:disabled { opacity: .3 }

@@ -123,3 +123,28 @@ async def test_lesson_editor_validation(client):
     assert r.status_code == 201 and r.json()["youtube_id"] == "aB3dE5fG7hJ"
     bad_q = {**full, "questions": [{"text": "x", "options": ["a", "b"], "correct": 5}]}
     assert (await client.post("/api/admin/lessons", json=bad_q, headers=a)).status_code == 422
+
+
+async def test_admin_lesson_roundtrip_and_members(client):
+    a = as_user(ADMIN)
+    mods = (await client.get("/api/admin/modules", headers=a)).json()
+    assert mods[0]["is_free"] and len(mods[0]["lessons"]) == 3
+    lid = mods[2]["lessons"][-1]["id"]
+    full = (await client.get(f"/api/admin/lessons/{lid}", headers=a)).json()
+    assert len(full["questions"]) == 5 and "correct" in full["questions"][0]  # админу ответы видны
+    full["title"] = "Прогрев: обновлено"
+    r = await client.put(f"/api/admin/lessons/{lid}", json={**full, "youtube": "https://www.youtube.com/watch?v=aB3dE5fG7hJ&t=10"}, headers=a)
+    assert r.status_code == 200 and r.json()["youtube_id"] == "aB3dE5fG7hJ"
+    assert (await client.get(f"/api/admin/lessons/{lid}", headers=as_user(NEWBIE))).status_code == 403
+    new_mod = (await client.post("/api/admin/modules", json={"title": "Звонки", "direction": "call"}, headers=a)).json()
+    assert new_mod["id"]
+    h = as_user(NEWBIE)
+    await client.get("/api/me", headers=h)
+    uid = next(p["id"] for p in (await client.get("/api/admin/people", headers=a)).json() if p["tg_id"] == NEWBIE)
+    await client.post(f"/api/admin/people/{uid}/role", json={"role": "member"}, headers=a)
+    oid = (await client.get("/api/orders", headers=h)).json()[0]["id"]
+    await client.post(f"/api/orders/{oid}/take", headers=h)
+    members = (await client.get("/api/admin/order-members", headers=a)).json()
+    assert members[0]["user"]["tg_id"] == NEWBIE
+    await client.post(f"/api/admin/order-members/{members[0]['id']}/confirm", headers=a)
+    assert (await client.get("/api/admin/order-members", headers=a)).json() == []

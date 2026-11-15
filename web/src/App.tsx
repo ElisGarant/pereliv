@@ -9,7 +9,7 @@ import Profile from "./screens/Profile";
 import Admin from "./screens/Admin";
 
 type Tab = "academy" | "orders" | "me" | "admin";
-const TABS: [Tab, string, number][] = [["academy", "Академия", 1], ["orders", "Заказы", 2], ["me", "Профиль", 0], ["admin", "Заявки", 4]];
+const TABS: [Tab, string, number][] = [["academy", "Академия", 1], ["orders", "Заказы", 2], ["me", "Профиль", 0], ["admin", "Админка", 4]];
 
 export default function App() {
   const [me, setMe] = useState<Me | null>(null);
@@ -30,7 +30,7 @@ export default function App() {
         {tab === "academy" && (lesson ? <LessonScreen id={lesson} back={() => setLesson(null)} /> : <Academy open={setLesson} />)}
         {tab === "orders" && <Orders />}
         {tab === "me" && <Profile me={me} />}
-        {tab === "admin" && <Admin />}
+        {tab === "admin" && <Admin isAdmin={rank >= RANK.admin} />}
       </main>
       <nav className="tabbar">
         {tabs.map(([k, n]) => <button key={k} className={tab === k ? "on" : ""} onClick={() => { setTab(k); setLesson(null); }}>{n}</button>)}

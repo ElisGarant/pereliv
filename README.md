@@ -40,6 +40,15 @@ cd server && .venv/bin/python -m bot.main
 2. Строку подключения из Project Settings → Database вставь в `DATABASE_URL`, заменив `postgresql://` на `postgresql+asyncpg://`.
 3. После изменения моделей пересобери схему: `cd server && .venv/bin/python -m app.schema > ../supabase/migrations/0002_....sql` (для новых таблиц пиши ALTER вручную).
 
+## Голосовые
+
+Бот сам переводит голосовые в текст на сервере (Whisper), без внешних ключей. Голосовые идут по одному, не больше 2 ядер, модель выгружается после простоя.
+Для локальной проверки: `.venv/bin/pip install -r requirements-voice.txt`. Подробности и настройки в `docs/DEPLOY.md`.
+
+## Запуск на сервере
+
+`docs/DEPLOY.md`: Docker, автоматический https, настройка бота в @BotFather.
+
 ## Видео уроков
 
 Видео загружается в YouTube с доступом **«По ссылке»** («Ограниченный доступ» в приложении не откроется). Субтитры берутся из YouTube автоматически.

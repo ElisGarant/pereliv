@@ -1,0 +1,43 @@
+# Запуск на сервере: docker compose up -d --build
+# Настройки — в server/.env и в переменной DOMAIN (файл .env рядом с этим)
+services:
+  api:
+    build: ./server
+    env_file: server/.env
+    environment:
+      DEV_MODE: "false"
+      WEBAPP_URL: https://${DOMAIN}
+      CORS_ORIGINS: https://${DOMAIN}
+    restart: unless-stopped
+
+  bot:
+    build:
+      context: ./server
+      args:
+        VOICE: "1"
+    command: ["python", "-m", "bot.main"]
+    env_file: server/.env
+    environment:
+      WEBAPP_URL: https://${DOMAIN}
+    volumes:
+      - models:/models  # модель Whisper скачивается один раз
+    restart: unless-stopped
+    # Потолок для расшифровки голосовых: не больше 2 ядер и 2 ГБ памяти, остальное серверу
+    cpus: 2.0
+    mem_limit: 2g
+
+  web:
+    build: ./web
+    environment:
+      DOMAIN: ${DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy_data:/data
+    depends_on: [api]
+    restart: unless-stopped
+
+volumes:
+  models:
+  caddy_data:

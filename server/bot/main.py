@@ -4,6 +4,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 
+from app import transcribe
 from app.config import get_settings
 from app.db import create_all
 
@@ -20,6 +21,14 @@ async def main() -> None:
     bot = Bot(s.bot_token)
     dp = Dispatcher()
     dp.include_routers(start.router, voice.router)
+
+    async def unload_loop() -> None:  # освобождаем память после простоя
+        while True:
+            await asyncio.sleep(60)
+            transcribe.unload_if_idle()
+
+    asyncio.create_task(unload_loop())
+    logging.info("расшифровка голосовых: %s", "включена" if transcribe.enabled() else "выключена")
     await dp.start_polling(bot)
 
 

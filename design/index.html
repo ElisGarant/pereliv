@@ -284,6 +284,42 @@ td{padding:10px 4px;border-top:1px solid var(--line);font-variant-numeric:tabula
 .lb-b{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:22px;flex:none;display:grid;place-items:center}
 .lb-x{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px))}
 @media (min-width:960px){.sticky{position:sticky;top:84px}}
+/* bot */
+.tgchat{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--s1);display:grid;min-width:0}
+.tghead{display:flex;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line)}
+.tgbody{display:grid;gap:8px;padding:14px;min-height:340px;max-height:62vh;overflow-y:auto;align-content:start;background:color-mix(in srgb,var(--acc2) 5%,var(--s2))}
+.msg{max-width:86%;justify-self:start;background:var(--s1);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 12px;font-size:14px;line-height:1.45;min-width:0}
+.msg.me{justify-self:end;background:color-mix(in srgb,var(--acc) 14%,var(--s1));border-color:transparent;border-radius:14px 14px 4px 14px}
+.msg .tm{display:block;text-align:right;font-size:10.5px;color:var(--mute);margin-top:2px}
+.vmsg{display:flex;align-items:center;gap:10px}
+.vplay{width:34px;height:34px;border-radius:50%;background:var(--acc);color:var(--acc-ink);display:grid;place-items:center;flex:none}
+.vplay svg{width:13px;height:13px;margin-left:2px}
+.vbars{display:flex;gap:2px;align-items:center;height:24px;width:110px;flex:none}
+.vbars i{flex:1;background:color-mix(in srgb,var(--acc) 60%,var(--dim));border-radius:2px}
+.vtr{font-size:11px;font-weight:700;padding:3px 7px;border-radius:6px;background:color-mix(in srgb,var(--fg) 8%,transparent)}
+.vtr.on{background:var(--acc);color:var(--acc-ink)}
+.vt{margin-top:8px;font-size:13.5px;padding-top:8px;border-top:1px solid color-mix(in srgb,var(--fg) 12%,transparent)}
+.kb{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:4px;width:86%;justify-self:start;margin-top:-4px}
+.kb button{padding:9px 8px;border-radius:10px;background:var(--s1);border:1px solid var(--line);font-size:13px;font-weight:600}
+.kb button.on{border-color:var(--acc);color:var(--acc)}
+.kb button:disabled{cursor:default}
+.kb button:disabled:not(.on){opacity:.5}
+.typing{display:flex;gap:4px;padding:12px 14px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--mute);animation:tdot 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,60%,100%{opacity:.25}30%{opacity:1}}
+.tgin{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border-top:1px solid var(--line)}
+.tgmic{width:40px;height:40px;border-radius:50%;background:var(--acc);color:var(--acc-ink);display:grid;place-items:center}
+.tgmic svg{width:18px;height:18px}
+.ladder{list-style:none;margin:10px 0 0;padding:0;display:grid}
+.ladder li{position:relative;padding:0 0 12px 26px;display:grid}
+.ladder li::before{content:"";position:absolute;left:3px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--s1);border:2px solid var(--dim)}
+.ladder li::after{content:"";position:absolute;left:8px;top:18px;bottom:2px;width:2px;background:var(--line)}
+.ladder li:last-child::after{display:none}
+.ladder li.last::before{border-color:var(--bad)}
+.ladder b{font-size:13.5px;font-weight:600}
+.offb{border-color:color-mix(in srgb,var(--warn) 45%,var(--line));background:color-mix(in srgb,var(--warn) 7%,var(--s1))}
+.tag svg{width:12px;height:12px}
 /* voice */
 .vscrim{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:95;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
 .vscrim.on{opacity:1;visibility:visible}
@@ -496,7 +532,7 @@ const I={
  upload:ic('<path d="M12 16V4M7 9l5-5 5 5M4 16v3.5h16V16"/>'),
 };
 const TABS=[["home","Главная",I.home],["plan","План",I.cal],["orders","Заказы",I.orders],["kb","Знания",I.kb],["com","Сообщество",I.com],["me","Профиль",I.me]];
-const TITLES={plan:"План",editor:"Редактор уроков",progress:"Прогресс учеников",lesson:"Урок",home:"Главная",orders:"Заказы",kb:"База знаний",com:"Сообщество",me:"Профиль",admin:"Управление"};
+const TITLES={bot:"Бот в Telegram",plan:"План",editor:"Редактор уроков",progress:"Прогресс учеников",lesson:"Урок",home:"Главная",orders:"Заказы",kb:"База знаний",com:"Сообщество",me:"Профиль",admin:"Управление"};
 const S={route:"home",ordTab:"market",ordType:"Все",kbTab:"base",kbCat:null,kbQ:"",comType:"Все",comSort:"top",useful:new Set(["p2"]),todo:new Set([2]),notif:{orders:true,kb:true,com:false,pay:true},playing:null};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -585,6 +621,7 @@ V.home=()=>`
 </div>
 <div class="sec">
  ${normsHTML()}
+ <section class="card"><div class="row" style="gap:12px;align-items:flex-start"><span class="pl" style="background:var(--acc);color:var(--acc-ink);flex:none">${I.mic}</span><div class="grow"><h3 class="h3">Отчёт голосом в боте</h3><p class="sm mute" style="margin:4px 0 8px">Отправь боту голосовое: он соберёт отчёт или задачу и покажет текст.</p><button class="link" data-go="bot">Как это выглядит ${I.arrow}</button></div></div></section>
  <section class="card pin"><span class="lbl">Закреплено · админ</span><h3 class="h3" style="margin:6px 0 4px">Новый заказ на инвайтинг: 6 мест</h3><p class="sm mute" style="margin:0 0 12px">Канал студии ремонта, 18 ₽ за участника. Приоритет тем, у кого удержание выше 85%.</p><button class="btn s" data-order="o1">Открыть заказ</button></section>
  <section class="card"><div class="btw"><h3 class="h3">Новое в базе</h3>${more("База","kb")}</div><div class="list">${ARTS.slice(0,3).map(artRow).join("")}</div></section>
  <section class="card"><div class="btw"><h3 class="h3">Обсуждают</h3>${more("Сообщество","com")}</div>
@@ -665,6 +702,7 @@ V.me=()=>`
  <section class="card"><h3 class="h3">Мои публикации</h3><div class="list" style="margin-top:4px">${[["Как я квалифицирую в переписке за 2 вопроса","Переписка · 19 «полезно»",true],["Клиент молчит после цены: что делаю","Вопрос · 7 ответов",false]].map(([t,d,b])=>`<div class="item"><div class="grow"><b>${t}</b><span class="xs mute">${d}</span></div>${b?'<span class="tag ok">в базе</span>':""}</div>`).join("")}</div></section>
 </div>
 <div class="sec">
+ <section class="card"><h3 class="h3">Дедлайны и правила</h3>${ladderHTML()}<div class="row" style="gap:8px;margin-top:4px;flex-wrap:wrap"><button class="btn s" data-off>Не в строю</button><button class="btn s" data-go="bot">${I.mic} Голосом в боте</button></div></section>
  <section class="card"><h3 class="h3">Реферальная ссылка</h3><p class="sm mute" style="margin:6px 0 10px">3 ученика и 1 заказчик · доход 7 300 ₽</p><div class="ref"><code id="ref">t.me/elis_team_bot?start=ELS0417</code><button class="btn s pri" id="copy">Копировать</button></div></section>
  <section class="card"><h3 class="h3">Уведомления в боте</h3><div class="list" style="margin-top:4px">${[["orders","Новые заказы под моё направление"],["kb","Новое в базе знаний"],["com","Ответы на мои публикации"],["pay","Начисления и выплаты"]].map(([k,n])=>`<button class="item" data-sw="${k}" role="switch" aria-checked="${S.notif[k]}"><span class="grow sm" style="font-weight:500">${n}</span><span class="sw ${S.notif[k]?"on":""}"></span></button>`).join("")}</div></section>
  <section class="card"><div class="btw"><div><h3 class="h3">Pulse CRM</h3><span class="xs mute">токен для отправки отчётов</span></div><span class="tag ok">подключено</span></div></section>
@@ -677,6 +715,8 @@ V.admin=()=>`
 <div class="sec">
  <section class="card"><div class="btw"><h3 class="h3">Модерация сообщества</h3><span class="tag acc" id="modN">3 в очереди</span></div>
   <div class="list" style="margin-top:4px">${[["m1","Илья С.","612 участников за 9 дней: какие чаты сработали","Кейс · 58 «полезно»"],["m2","Петя К.","Клиент сказал «перезвоните через месяц»","Звонок · 31 «полезно»"],["m3","Олег Н.","Скрин переписки с клиентом","Переписка · виден номер телефона"]].map(([id,w,t,d])=>`<div class="item" id="${id}" style="flex-wrap:wrap"><div class="grow" style="min-width:200px"><b>${t}</b><span class="xs mute">${w} · ${d}</span></div><div class="row" style="gap:6px">${id==="m3"?`<button class="btn s" data-mod="${id}" data-act="hide">Скрыть и попросить замазать</button>`:`<button class="btn s pri" data-mod="${id}" data-act="base">В базу знаний</button><button class="btn s" data-mod="${id}" data-act="ok">Оставить</button>`}</div></div>`).join("")}</div></section>
+ <section class="card"><div class="btw" style="flex-wrap:wrap"><h3 class="h3">Разборы недели</h3><span class="xs mute">голосовые уже в тексте</span></div><div class="list" style="margin-top:4px">${[["Илья С.","0:23","Два дня аккаунт был в ограничении, поэтому не добрал норму. Хочу разбор, как прогревать новые аккаунты.","аккаунт в ограничении","warn"],["Катя М.","0:41","Не понимаю, что отвечать, когда в чате сразу просят прайс. Из-за этого теряю людей.","нужен разбор","acc"],["Маша С.","0:12","Всё хорошо, хочу больше заказов на обработку.","хочет больше заказов","ok"]].map(([n,du,tx,tg,c])=>`<div class="item" style="align-items:flex-start;flex-wrap:wrap"><div class="ava ${hue(n)}">${n.split(" ").map(w=>w[0]).join("")}</div><div class="grow" style="min-width:200px"><div class="row" style="gap:6px;flex-wrap:wrap"><b style="display:inline">${n}</b><span class="tag">${I.mic} ${du}</span><span class="tag ${c}">${tg}</span></div><div class="sm" style="margin-top:4px">«${tx}»</div></div><div class="row" style="gap:6px"><button class="btn s" data-toast="Ответ уйдёт в бот, можно голосом">Ответить</button><a class="btn s" href="https://t.me/" target="_blank" rel="noopener">${I.tg} В личку</a></div></div>`).join("")}</div></section>
+ <section class="card"><div class="btw" style="flex-wrap:wrap"><h3 class="h3">Дедлайны и штрафы</h3><button class="btn s" data-rules>Правила</button></div><div class="list" style="margin-top:4px">${[["f1","Илья С.","Отчёт по инвайтингу","просрочен на 26 ч · заказчик снял 2 000 ₽","bad",true],["f2","Катя М.","Отчёт · чат English Way","просрочен на 3 ч","warn",false]].map(([id,n,o,d,c,loss])=>`<div class="item" style="flex-wrap:wrap"><div class="grow" style="min-width:200px"><b>${n} · ${o}</b><span class="xs" style="color:var(--${c})">${d}</span></div><div class="row" style="gap:6px"><button class="btn s" data-toast="Напомнили в боте">Напомнить</button>${loss?`<button class="btn s pri" data-fine="${id}" data-fn="${n}" data-fo="${o}">Удержание</button>`:""}</div></div>`).join("")}</div><div class="xs mute" style="margin-top:8px">Удержание доступно, только когда есть потеря денег.</div></section>
  <section class="card"><div class="btw" style="flex-wrap:wrap"><h3 class="h3">Отчёты по инвайтингу</h3><span class="xs mute">удержание через 7 дней</span></div>
   <div class="tbl"><table><thead><tr><th>Исполнитель</th><th>Заказ</th><th>Пригласил</th><th>Осталось</th><th>К оплате</th><th></th></tr></thead><tbody>
   ${[["Илья С.","Канал ремонта",340,312,"5 616 ₽"],["Артём К.","Канал ремонта",272,247,"4 446 ₽"],["Катя М.","Чат English Way",120,84,"2 100 ₽"]].map(([n,o,a,b,s],i)=>`<tr id="r${i}"><td><b>${n}</b></td><td>${o}</td><td class="mono">${a}</td><td class="mono">${b} <span class="tag ${b/a>.85?"ok":"warn"}">${Math.round(b/a*100)}%</span></td><td class="mono">${s}</td><td><button class="btn s" data-rep="r${i}">Принять</button></td></tr>`).join("")}</tbody></table></div></section>
@@ -1189,7 +1229,7 @@ V.plan=()=>`<div id="planRoot" style="display:contents"></div>`;
 function initPlan(){planDraw()}
 function planDraw(){const r=$("#planRoot");if(!r)return;r.innerHTML=PD.view==="day"?dayHTML():weekHTML();bindPlan()}
 function headHTML(){return `<div class="full btw" style="flex-wrap:wrap;gap:10px"><div><span class="lbl">Ноябрь · неделя 46</span><h2 class="disp" style="font-size:clamp(20px,5vw,26px);margin-top:4px">${PD.view==="week"?"Неделя 10–16 ноября":PD.sel===TODAY?"Сегодня, суббота":DAYSF[PD.sel]+", "+DATES[PD.sel]+" ноября"}</h2></div>
- <div class="seg">${[["day","День"],["week","Неделя"]].map(([k,n])=>`<button class="${PD.view===k?"on":""}" data-pview="${k}">${n}</button>`).join("")}</div></div>`}
+ <div class="row" style="gap:8px"><button class="btn s" data-tpl>Шаблон дня</button><div class="seg">${[["day","День"],["week","Неделя"]].map(([k,n])=>`<button class="${PD.view===k?"on":""}" data-pview="${k}">${n}</button>`).join("")}</div></div></div>`}
 function weekStrip(){return `<div class="week full">${DAYS.map((d,k)=>{const n=PD.tasks.filter(x=>x.day===k).length,dn=PD.tasks.filter(x=>x.day===k&&x.done).length;
  return `<button class="wd ${k===PD.sel&&PD.view==="day"?"on":""} ${k===TODAY?"today":""}" data-pday="${k}" aria-label="${DAYSF[k]}, ${n} задач"><span>${d}</span><b>${DATES[k]}</b><span class="ld">${n?Array.from({length:Math.min(n,4)},(_,j)=>`<i class="${j<Math.round(dn/n*Math.min(n,4))?"f":""}"></i>`).join(""):"<i style=\"opacity:0\"></i>"}</span></button>`}).join("")}</div>`}
 function lanes(list){list.forEach(a=>{a._ov=list.filter(b=>b!==a&&b.start<a.start+a.dur&&a.start<b.start+b.dur)});const done=[];list.forEach(a=>{a._lane=a._ov.length?(a._ov.some(b=>done.includes(b)&&b._lane===0)?1:0):-1;done.push(a)})}
@@ -1197,7 +1237,7 @@ function dayHTML(){const ts=PD.tasks.filter(x=>x.day===PD.sel),timed=ts.filter(x
  const total=ts.length,dn=ts.filter(x=>x.done).length,focusMin=FO.blocks*25;
  const counters=[...ts.filter(x=>x.count).map(x=>({id:x.id,n:x.t.split(":")[0],v:x.count.v,max:x.count.max,u:x.count.u})),...(PD.sel===TODAY?PD.limits.map((l,k)=>({lid:k,n:l.n,v:l.v,max:l.max,u:"сообщений"})):[])];
  const nh=nowH();
- return headHTML()+weekStrip()+`
+ return headHTML()+offBanner()+weekStrip()+`
 <div class="sec">
  <section class="card"><form class="qadd" id="qaddForm" autocomplete="off"><input class="inp" id="qaddIn" placeholder="Например: «инвайт 40 человек до 18:00» или «урок 8 завтра в 12»" aria-label="Новая задача"><button class="btn" type="button" data-mic="qaddIn" data-sample="plan" aria-label="Сказать голосом">${I.mic}</button><button class="btn pri" type="submit" aria-label="Добавить задачу">${I.plus}</button></form><div id="qaddHint" class="row xs mute" style="margin-top:8px;gap:6px;flex-wrap:wrap">Время и день распознаются из текста</div></section>
  <section class="card"><div class="btw"><h3 class="h3">Расписание</h3><span class="xs mute hide-m">нажми на пустое время, чтобы добавить задачу</span></div>
@@ -1331,7 +1371,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)r
 });
 
 /* ---------- норма дня ---------- */
-function normsHTML(){const ts=PD.tasks.filter(x=>x.day===TODAY),inv=ts.find(x=>x.count),rep=ts.find(x=>x.dl),nh=nowH(),left=21-nh,fm=FO.blocks*25;
+function normsHTML(){if(PD.off&&PD.off.now)return `<section class="card norm offb"><div class="btw"><h3 class="h3">Норма на сегодня</h3><span class="tag warn">пауза</span></div><p class="sm mute" style="margin:8px 0 12px">${PD.off.type} до ${PD.off.to}. Норма не считается, серия сохранится.</p><button class="btn s" data-offend>Вернуться раньше</button></section>`;const ts=PD.tasks.filter(x=>x.day===TODAY),inv=ts.find(x=>x.count),rep=ts.find(x=>x.dl),nh=nowH(),left=21-nh,fm=FO.blocks*25;
  const late=left<=0&&!(rep&&rep.done),lesson=LESSONS[6][2]==="d";
  const rows=[
   [inv&&inv.count.v>=inv.count.max,"Инвайты",inv?`${inv.count.v}/${inv.count.max}`:"—",inv?inv.count.v/inv.count.max:0],
@@ -1341,7 +1381,100 @@ function normsHTML(){const ts=PD.tasks.filter(x=>x.day===TODAY),inv=ts.find(x=>x
  const ok=rows.filter(r=>r[0]).length;
  return `<section class="card norm"><div class="btw"><h3 class="h3">Норма на сегодня</h3><span class="tag ${ok===rows.length?"ok":"acc"}">${ok}/${rows.length}</span></div>
  <div style="margin-top:6px">${rows.map(([v,n,val,p,bad])=>`<div class="nrow"><span class="nd ${v?"ok":bad?"late":""}">${v?I.check:""}</span><div style="min-width:0"><div class="btw sm"><span>${n}</span><span class="mono xs" style="${bad?"color:var(--bad)":v?"color:var(--ok)":""}">${val}</span></div>${p!=null?`<div class="bar ${v?"":"a"}" style="height:4px;margin-top:6px"><i style="width:${Math.min(p,1)*100}%;${v?"background:var(--ok)":""}"></i></div>`:""}</div></div>`).join("")}</div>
- <div class="xs mute" style="margin-top:8px">Норма закрыта 6 дней подряд. Всё, что сверх нормы, идёт в XP и рейтинг.</div></section>`}
+ <div class="xs mute" style="margin-top:8px">Закрыта 6 дней подряд · 1 заморозка в запасе: один пропуск в месяц серию не сбросит. Всё сверх нормы идёт в XP и рейтинг.</div><div class="row" style="gap:6px;margin-top:12px;flex-wrap:wrap"><button class="btn s" data-tpl>Шаблон дня</button><button class="btn s" data-off>Не в строю</button></div></section>`}
+
+/* ---------- бот: голосовые → отчёты, задачи, разбор недели ---------- */
+const SC={
+ report:{n:"Отчёт голосом",m:[["me","voice","0:14","Сегодня пригласил 52 человека, лучше всего зашли чаты новостроек, в одном чате удалили сообщения"],
+  ["bot","card","Распознал голосовое и собрал отчёт",{t:"Отчёт · Инвайтинг в канал ремонта",r:[["Приглашено","52"],["Источники","чаты новостроек"],["Проблема","удаляют сообщения в 1 чате"]]},["Отправить","Поправить"]]]},
+ task:{n:"Задача голосом",m:[["me","voice","0:06","Напомни завтра в 10 позвонить заказчику по стоматологии"],
+  ["bot","card","Понял, ставлю задачу",{t:"Позвонить заказчику по стоматологии",r:[["Когда","вс, 16 нояб · 10:00"],["Тип","Заказ"],["Напомню","за 15 минут"]]},["Добавить в план","Поправить"]]]},
+ week:{n:"Разбор недели",m:[["bot","text","Пятница, итоги недели:\n• 168 инвайтов из 200\n• 9 ч 40 мин фокуса\n• 4 сделки\n\nЧто мешало на этой неделе? Можно ответить голосом."],
+  ["me","voice","0:23","Два дня аккаунт был в ограничении, поэтому не добрал норму. Хочу разбор, как прогревать новые аккаунты"],
+  ["bot","text","Записал и передал наставнику. Он ответит до понедельника."],["bot","kb",["Записаться на разбор","Статья: прогрев аккаунта"]]]}
+};
+S.sc="report";let BOTX=[];
+const wavebars=(n,seed0)=>{let s0=seed0;return Array.from({length:n},()=>{s0=(s0*16807)%2147483647;return `<i style="height:${25+s0%75}%"></i>`}).join("")};
+function msgHTML(m,k){const [who,type]=m;const me=who==="me";
+ if(type==="voice")return `<div class="msg ${me?"me":""}"><div class="vmsg"><span class="vplay">${I.play}</span><span class="vbars">${wavebars(30,k*977+13)}</span><span class="mono xs">${m[2]}</span><button class="vtr" data-vtr="${k}" aria-label="Показать текст">Аа</button></div><div class="vt" id="vt${k}" hidden>${esc(m[3])}</div><span class="tm">21:0${k%10}</span></div>`;
+ if(type==="text")return `<div class="msg">${esc(m[2]).replace(/\n/g,"<br>")}<span class="tm">21:0${k%10}</span></div>`;
+ if(type==="card")return `<div class="msg"><div class="xs mute" style="margin-bottom:6px">${esc(m[2])}</div><b style="display:block;margin-bottom:6px">${esc(m[3].t)}</b>${m[3].r.map(([a,b])=>`<div class="btw xs" style="padding:3px 0"><span class="mute">${a}</span><span style="font-weight:600;text-align:right">${esc(b)}</span></div>`).join("")}<span class="tm">21:0${k%10}</span></div><div class="kb">${m[4].map(b=>`<button data-bk="${esc(b)}">${esc(b)}</button>`).join("")}</div>`;
+ if(type==="kb")return `<div class="kb">${m[2].map(b=>`<button data-bk="${esc(b)}">${esc(b)}</button>`).join("")}</div>`;
+ if(type==="typing")return `<div class="msg typing"><i></i><i></i><i></i></div>`;return ""}
+V.bot=()=>`
+<div class="full row" style="gap:10px;flex-wrap:wrap"><span class="xs mute" style="max-width:60ch">Так это выглядит в Telegram. Голосовые превращаются в текст сами. Бот показывает, что понял, а ты подтверждаешь или поправляешь.</span></div>
+<div class="sec">
+ <div class="seg">${Object.entries(SC).map(([k,v])=>`<button class="${S.sc===k?"on":""}" data-sc="${k}">${v.n}</button>`).join("")}</div>
+ <div class="tgchat"><div class="tghead"><span class="ava me" style="width:38px;height:38px">E</span><div class="grow"><b class="sm" style="font-weight:700;display:block">ELI_S team</b><span class="xs mute">бот</span></div></div>
+  <div class="tgbody" id="tgbody">${[...SC[S.sc].m,...BOTX].map(msgHTML).join("")}</div>
+  <div class="tgin"><span class="grow mute sm">Сообщение</span><button class="tgmic" data-tgmic aria-label="Записать голосовое">${I.mic}</button></div></div>
+</div>
+<div class="sec">
+ <section class="card"><h3 class="h3">Что понимает бот</h3><div class="list" style="margin-top:4px">${[["Отчёт","«пригласил 52, лучше всего чаты новостроек»"],["Задача","«напомни завтра в 10 позвонить…»"],["Вопрос наставнику","«вопрос: что отвечать на скидку»"],["Заметка к уроку","«заметка к уроку 7: забрать фразу про выбор»"],["Разбор недели","ответ на пятничный вопрос"]].map(([a,b])=>`<div class="item"><div class="grow"><b>${a}</b><span class="xs mute">${b}</span></div></div>`).join("")}</div></section>
+ <section class="card"><h3 class="h3">Личка никуда не делась</h3><p class="sm mute" style="margin:6px 0 12px">Можно писать админу напрямую. Голосовые в личке бот тоже переводит в текст, если переслать их ему.</p><a class="btn s w" href="https://t.me/" target="_blank" rel="noopener">${I.tg} Написать админу</a></section>
+</div>`;
+
+/* ---------- не в строю, шаблоны дня ---------- */
+PD.off=null;
+function offBanner(){return PD.off?`<section class="full card offb"><div class="row" style="gap:12px;flex-wrap:wrap"><span class="tag warn">${PD.off.type}</span><span class="grow sm">${PD.off.now?`До ${PD.off.to} норма на паузе, серия сохранится.`:`Запланировано: с ${PD.off.from} по ${PD.off.to}. На эти дни норма не считается.`} ${PD.off.pass?"Заказы на это время передаются напарнику.":""}</span><button class="btn s" data-offend>${PD.off.now?"Вернуться раньше":"Отменить"}</button></div></section>`:""}
+function offSheet(){sheet(`<form class="stack" id="offForm"><h3 id="sheetTitle">Не в строю</h3><p class="sm mute" style="margin:-6px 0 0">Норма и серия на эти дни не считаются. Менеджер увидит, что тебя нет.</p>
+ <div class="field"><label>Причина</label><div class="chips" id="offType">${["Отпуск","Больничный","Личное"].map((t,k)=>`<button type="button" class="${k?"":"on"}" data-offt="${t}">${t}</button>`).join("")}</div></div>
+ <div class="kv"><div class="field"><label for="of1">С</label><input class="inp" type="date" id="of1" value="2026-11-17"></div><div class="field"><label for="of2">По</label><input class="inp" type="date" id="of2" value="2026-11-18"></div></div>
+ <div class="field"><label for="of3">Комментарий · необязательно</label><input class="inp" id="of3" placeholder="Например: на связи вечером"></div>
+ <button type="button" class="item" data-offpass role="switch" aria-checked="true"><span class="grow"><b>Передать мои заказы напарнику</b><span class="xs mute">чтобы заказчик не ждал</span></span><span class="sw on"></span></button>
+ <button class="btn pri w" type="submit">Сохранить</button></form>`)}
+const TPL={"Инвайтинг":[[10,2,"order","Инвайтинг: первый заход",{count:{v:0,max:40,u:"приглашений"}}],[12,.5,"study","Урок или статья из базы"],[14,2,"order","Инвайтинг: второй заход"],[17,.5,"own","Проверить удержание и чаты"],[20.75,.25,"order","Сдать отчёт",{dl:true}]],
+ "Переписка":[[9.5,.5,"order","Разобрать новые заявки"],[10,1.5,"order","Ответы по заявкам · фокус"],[13,.5,"study","Урок"],[15,2,"order","Дожим и прогрев"],[20.75,.25,"order","Сдать отчёт",{dl:true}]],
+ "Звонки":[[10,2,"order","Обзвон · первый блок"],[12.5,.5,"study","Разбор своего звонка"],[14,2,"order","Обзвон · второй блок"],[18,.5,"own","Записать итоги в CRM"],[20.75,.25,"order","Сдать отчёт",{dl:true}]]};
+S.tpl="Инвайтинг";S.tplDay=6;S.tplRepl=false;
+function tplSheet(){const L=TPL[S.tpl];sheet(`<div class="stack"><h3 id="sheetTitle">Шаблон дня</h3>
+ <div class="seg">${Object.keys(TPL).map(k=>`<button class="${S.tpl===k?"on":""}" data-tplk="${k}">${k}</button>`).join("")}</div>
+ <div class="list">${L.map(([s,d,c,t])=>`<div class="item" style="padding:9px 0"><span class="mono xs" style="width:84px;color:var(--${PCAT[c][1]})">${fmtH(s)}–${fmtH(s+d)}</span><b class="grow" style="font-weight:500">${t}</b></div>`).join("")}</div>
+ <div class="kv"><div class="field"><label for="tpd">На какой день</label><select class="inp" id="tpd">${DAYS.map((d,k)=>`<option value="${k}" ${S.tplDay===k?"selected":""}>${d}, ${DATES[k]} нояб${k===TODAY?" · сегодня":k===TODAY+1?" · завтра":""}</option>`).join("")}</select></div></div>
+ <button type="button" class="item" data-tplrepl role="switch" aria-checked="${S.tplRepl}"><span class="grow"><b>Заменить задачи этого дня</b><span class="xs mute">иначе шаблон добавится к ним</span></span><span class="sw ${S.tplRepl?"on":""}"></span></button>
+ <button class="btn pri w" data-tplgo>Заполнить день</button><span class="xs mute" style="text-align:center">Шаблоны для направлений настраивает админ</span></div>`)}
+
+/* ---------- штрафы и правила ---------- */
+const RULES=[["За 1 час","напоминание в боте"],["В дедлайн","задача красная в плане"],["Через 24 часа","видит менеджер, нужна причина"],["Если потеряли деньги","штраф с причиной, можно оспорить 3 дня"]];
+const ladderHTML=()=>`<ol class="ladder">${RULES.map(([a,b],k)=>`<li class="${k===3?"last":""}"><b>${a}</b><span class="xs mute">${b}</span></li>`).join("")}</ol>`;
+function rulesSheet(){sheet(`<form class="stack" id="rulesForm"><h3 id="sheetTitle">Правила дедлайнов</h3>${ladderHTML()}
+ <div class="kv"><div class="field"><label for="ru1">Напоминание за</label><select class="inp" id="ru1"><option>30 минут</option><option selected>1 час</option><option>3 часа</option></select></div><div class="field"><label for="ru2">Менеджер видит через</label><select class="inp" id="ru2"><option>12 часов</option><option selected>24 часа</option><option>48 часов</option></select></div><div class="field"><label for="ru3">Штраф, максимум</label><select class="inp" id="ru3"><option>5% от начисления</option><option selected>10% от начисления</option><option>сумма потерь, не больше начисления</option></select></div></div>
+ <div class="note">${I.shield}<span>Штраф только если из-за просрочки агентство или заказчик потеряли деньги. Первый раз — предупреждение. Причину видно в профиле человека.</span></div>
+ <button class="btn pri w" type="submit">Сохранить правила</button></form>`)}
+function fineSheet(n,o){sheet(`<form class="stack" id="fineForm"><span class="lbl">Удержание</span><h3 id="sheetTitle">${n} · ${o}</h3>
+ <div class="field"><label for="fi1">Что потеряли</label><textarea class="inp" id="fi1" placeholder="Например: заказчик снял 2 000 ₽ за срыв сроков отчёта">Заказчик снял 2 000 ₽ за срыв сроков отчёта</textarea></div>
+ <div class="kv"><div class="field"><label for="fi2">Сумма, ₽</label><input class="inp mono" id="fi2" inputmode="numeric" value="560"></div><div><span class="xs mute">Лимит по правилам</span><b>10% · 560 ₽</b><span class="xs mute">от начисления 5 616 ₽</span></div></div>
+ <button type="button" class="item" data-warnonly role="switch" aria-checked="false"><span class="grow"><b>Только предупреждение</b><span class="xs mute">если это первый раз</span></span><span class="sw"></span></button>
+ <div class="note">${I.shield}<span>Человек увидит причину и сумму в выплатах и сможет оспорить в течение 3 дней.</span></div>
+ <button class="btn pri w" type="submit">Применить</button></form>`)}
+
+document.addEventListener("submit",e=>{const id=e.target.id;if(!["offForm","rulesForm","fineForm"].includes(id))return;e.preventDefault();e.stopPropagation();
+ if(id==="offForm"){const t=($("#offType .on")||{}).dataset;const to=$("#of2").value.split("-"),fr=$("#of1").value.split("-");PD.off={type:t?t.offt:"Отпуск",from:+fr[2],now:+fr[2]<=15&&+fr[1]<=11,to:+to[2]+" ноября",pass:$("[data-offpass]").getAttribute("aria-checked")==="true"};close();render();toast("Отметили. Норма на паузе, менеджер в курсе");return}
+ if(id==="rulesForm"){close();toast("Правила сохранены и видны всей команде");return}
+ const w=$("[data-warnonly]").getAttribute("aria-checked")==="true";if(!w&&!$("#fi1").value.trim()){toast("Напиши, что потеряли");return}close();toast(w?"Отправили предупреждение в бот":"Удержание создано. У человека 3 дня, чтобы оспорить");
+ const r=document.querySelector(`[data-fine="${FINE_ROW}"]`);if(r){const row=r.closest(".item");done(row,w?"warn":"bad",w?"предупреждение":"удержание")}},true);
+let FINE_ROW=null;
+document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;const d=t.dataset;
+ if(d.sc){S.sc=d.sc;BOTX=[];render();return}
+ if(d.vtr!==undefined){const v=$("#vt"+d.vtr);v.hidden=!v.hidden;t.classList.toggle("on",!v.hidden);return}
+ if(d.bk){const b=d.bk;if(b==="Добавить в план"){PD.tasks.push(T(6,10,.5,"order","Позвонить заказчику по стоматологии"));toast("Добавлено в план на воскресенье, 10:00")}
+  else if(b==="Отправить")toast("Отчёт отправлен. Удержание проверим через 7 дней");else if(b==="Поправить")toast("Пришли исправление текстом или голосом");
+  else if(b==="Записаться на разбор")toast("Записали на пятничный разбор");else if(b.startsWith("Статья"))artSheet("a1");else toast(b);
+  t.parentNode.querySelectorAll("button").forEach(x=>{x.disabled=true;x.classList.toggle("on",x===t)});return}
+ if("tgmic" in d){const body=$("#tgbody");const k=50+BOTX.length;BOTX.push(["me","voice","0:05","Записал троих пациентов на понедельник, один попросил перезвонить в среду"]);
+  body.insertAdjacentHTML("beforeend",msgHTML(BOTX[BOTX.length-1],k)+msgHTML(["bot","typing"],0));body.scrollTop=body.scrollHeight;
+  setTimeout(()=>{const ty=body.querySelector(".typing");if(ty)ty.remove();const m=["bot","card","Распознал голосовое и собрал отчёт",{t:"Отчёт · Стоматология «Дента»",r:[["Записано","3 пациента"],["Перезвонить","1 · в среду"]]},["Отправить","Поправить"]];BOTX.push(m);body.insertAdjacentHTML("beforeend",msgHTML(m,k+1));body.scrollTop=body.scrollHeight},1100);return}
+ if("off" in d){offSheet();return}
+ if(d.offt){t.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===t));return}
+ if("offpass" in d||"warnonly" in d||"tplrepl" in d){const on=t.getAttribute("aria-checked")!=="true";t.setAttribute("aria-checked",on);t.querySelector(".sw").classList.toggle("on",on);if("tplrepl" in d)S.tplRepl=on;return}
+ if("offend" in d){PD.off=null;render();toast("С возвращением");return}
+ if("tpl" in d){tplSheet();return}
+ if(d.tplk){S.tpl=d.tplk;S.tplDay=+$("#tpd").value;tplSheet();return}
+ if("tplgo" in d){const day=+$("#tpd").value;if(S.tplRepl)PD.tasks=PD.tasks.filter(x=>x.day!==day);TPL[S.tpl].forEach(([s,du,c,ti,x])=>PD.tasks.push(T(day,s,du,c,ti,x?JSON.parse(JSON.stringify(x)):{})));
+  close();PD.sel=day;PD.view="day";if(S.route==="plan")planDraw();else go("plan");toast(`День заполнен: ${S.tpl.toLowerCase()}, ${TPL[S.tpl].length} задач`);return}
+ if("rules" in d){rulesSheet();return}
+ if(d.fine){FINE_ROW=d.fine;fineSheet(d.fn,d.fo);return}
+});
 
 (()=>{try{const th=localStorage.getItem("elis-theme");if(th)document.documentElement.dataset.theme=th}catch(_){}const h=location.hash.slice(1);S.route=V[h]?h:"home";render()})();
 </script>

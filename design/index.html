@@ -284,6 +284,67 @@ td{padding:10px 4px;border-top:1px solid var(--line);font-variant-numeric:tabula
 .lb-b{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:22px;flex:none;display:grid;place-items:center}
 .lb-x{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px))}
 @media (min-width:960px){.sticky{position:sticky;top:84px}}
+/* editor */
+.edgrid{display:grid;gap:12px;min-width:0}
+.tree summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tree summary::-webkit-details-marker{display:none}
+.tl-row{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;font-size:13.5px;font-weight:500;cursor:pointer;transition:background .15s}
+.tl-row:hover{background:var(--s2)}
+.tl-row.on{background:color-mix(in srgb,var(--acc) 10%,var(--s2));font-weight:700}
+.tl-row .hdl{color:var(--dim);cursor:grab;font-size:11px;letter-spacing:-3px;width:12px}
+.tl-row.drag{opacity:.35}
+.tl-row.over,.addl.over{box-shadow:inset 0 2px 0 var(--acc)}
+.st{width:8px;height:8px;border-radius:50%;flex:none;background:var(--ok)}
+.st.draft{background:var(--warn)}
+.addl{font-size:13px;font-weight:600;color:var(--mute);padding:7px 8px;display:flex;gap:6px;align-items:center;border-radius:8px;width:100%;text-align:left}
+.addl:hover{color:var(--fg);background:var(--s2)}
+.addl svg{width:14px;height:14px}
+.edhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.saved{font-size:12px;color:var(--mute);display:inline-flex;gap:6px;align-items:center}
+.saved i{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.saved.busy i{background:var(--warn)}
+.title-inp{font-family:var(--disp);font-size:clamp(18px,4vw,22px);font-weight:600;letter-spacing:-.02em;background:transparent;border-color:transparent;padding:6px 8px;margin:6px -8px 0;width:calc(100% + 16px)}
+.title-inp:hover,.title-inp:focus{background:var(--s2);border-color:var(--line)}
+.rowf{display:grid;grid-template-columns:84px minmax(0,1fr) 28px;gap:8px;align-items:center}
+.qcard{border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;background:var(--s1)}
+.optrow{display:grid;grid-template-columns:22px minmax(0,1fr) 28px;gap:8px;align-items:center}
+.optrow input[type=radio]{width:18px;height:18px;margin:0;accent-color:var(--ok);cursor:pointer}
+.inp.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 8%,var(--s2))}
+.ndel:disabled{opacity:.3;cursor:default}
+.tool{display:flex;gap:2px;flex-wrap:wrap;padding:5px;border:1px solid var(--line);border-bottom:0;border-radius:11px 11px 0 0;background:var(--s2)}
+.tool button{padding:6px 10px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--mute)}
+.tool button:hover{background:var(--s1);color:var(--fg)}
+.md-in{border-radius:0 0 11px 11px;min-height:240px;font-size:14px;line-height:1.6;font-family:var(--mono);font-size:13px}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.thumb{display:grid;gap:6px;min-width:0}
+.thumb .im{position:relative}
+.thumb img{width:100%;aspect-ratio:10/7;object-fit:cover;border-radius:10px;border:1px solid var(--line);display:block}
+.thumb .x{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:12px}
+.thumb .inp{padding:7px 9px;font-size:12.5px}
+.addimg{aspect-ratio:10/7;border:1.5px dashed var(--line);border-radius:10px;display:grid;place-items:center;align-content:center;gap:6px;color:var(--mute);font-size:13px;cursor:pointer;text-align:center}
+.addimg:hover{border-color:var(--dim);color:var(--fg)}
+.addimg svg{width:20px;height:20px}
+.addimg input{display:none}
+.check{display:flex;gap:10px;align-items:center;padding:6px 0;font-size:13.5px}
+.check .ci2{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex:none;border:1.5px solid var(--dim)}
+.check.ok .ci2{background:var(--ok);border-color:var(--ok);color:var(--s1)}
+.check .ci2 svg{width:12px;height:12px}
+/* progress */
+.fun{display:grid;gap:8px}
+.frow{display:grid;grid-template-columns:minmax(0,1fr);gap:4px 12px;align-items:center}
+.fbar{height:20px;border-radius:6px;background:var(--s2);overflow:hidden;position:relative}
+.fbar i{display:block;height:100%;background:color-mix(in srgb,var(--acc2) 45%,var(--s2));border-radius:6px}
+.frow.drop .fbar i{background:var(--acc)}
+.frow.drop .ell{color:var(--acc);font-weight:700}
+.fdrop{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:11px;font-weight:500;color:var(--acc)}
+.cell{width:20px;height:20px;border-radius:6px;display:inline-block;vertical-align:middle;background:var(--s2);border:1px solid var(--line)}
+.cell.d{background:var(--fg);border-color:var(--fg)}
+.cell.c{border:2px solid var(--acc);background:transparent}
+.cell.f{background:var(--bad);border-color:var(--bad)}
+.srow{cursor:pointer}
+.srow:hover td{background:var(--s2)}
+@media (min-width:640px){.frow{grid-template-columns:minmax(0,1.1fr) minmax(0,2fr) 76px}}
+@media (min-width:960px){.edgrid{grid-template-columns:290px minmax(0,1fr);align-items:start}.edside{position:sticky;top:84px;max-height:calc(100vh - 100px);overflow-y:auto}}
 @media (max-width:640px){.player .ttl{display:none}.player .poster{padding-bottom:56px}.player .big{width:54px;height:54px}.player .cap{bottom:56px;font-size:13px}.cbar{gap:4px;font-size:12px}.cbar>button{min-width:28px}}
 
 /* desktop */
@@ -357,7 +418,7 @@ const I={
  upload:ic('<path d="M12 16V4M7 9l5-5 5 5M4 16v3.5h16V16"/>'),
 };
 const TABS=[["home","Главная",I.home],["orders","Заказы",I.orders],["kb","Знания",I.kb],["com","Сообщество",I.com],["me","Профиль",I.me]];
-const TITLES={lesson:"Урок",home:"Главная",orders:"Заказы",kb:"База знаний",com:"Сообщество",me:"Профиль",admin:"Управление"};
+const TITLES={editor:"Редактор уроков",progress:"Прогресс учеников",lesson:"Урок",home:"Главная",orders:"Заказы",kb:"База знаний",com:"Сообщество",me:"Профиль",admin:"Управление"};
 const S={route:"home",ordTab:"market",ordType:"Все",kbTab:"base",kbCat:null,kbQ:"",comType:"Все",comSort:"top",useful:new Set(["p2"]),todo:new Set([2]),notif:{orders:true,kb:true,com:false,pay:true},playing:null};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -545,7 +606,7 @@ V.admin=()=>`
   ${[["Маша С.","Обработка","Senior","сдан","52 300 ₽","ok","В работе"],["Илья С.","Инвайтинг","Специалист","нет","21 100 ₽","bad","Риск"],["Артём К.","Обработка","Специалист","сдан","38 400 ₽","ok","В работе"],["Вика Р.","Звонки","Стажёр","сдан","9 800 ₽","warn","Экзамен"],["Катя М.","Инвайтинг","Стажёр","—","2 100 ₽","","Учится"]].map(([n,d,g,r,m,c,s])=>`<tr><td><b>${n}</b></td><td>${d}</td><td>${g}</td><td style="${r==="нет"?"color:var(--bad)":""}">${r}</td><td class="mono">${m}</td><td><span class="tag ${c}">${s}</span></td></tr>`).join("")}</tbody></table></div></section>
 </div>
 <div class="sec">
- <section class="card"><h3 class="h3">Быстрые действия</h3><div style="display:grid;gap:8px;margin-top:10px"><button class="btn pri" data-neworder>${I.plus} Заказ на инвайтинг</button><button class="btn" data-toast="Редактор статьи откроется здесь">${I.plus} Статья в базу</button><button class="btn" data-toast="Рассылка по сегментам откроется здесь">Объявление в бот</button></div></section>
+ <section class="card"><h3 class="h3">Быстрые действия</h3><div style="display:grid;gap:8px;margin-top:10px"><button class="btn pri" data-neworder>${I.plus} Заказ на инвайтинг</button><button class="btn" data-go="editor">${I.kb} Редактор уроков</button><button class="btn" data-go="progress">${I.users} Прогресс учеников</button><button class="btn" data-toast="Редактор статьи откроется здесь">${I.plus} Статья в базу</button><button class="btn" data-toast="Рассылка по сегментам откроется здесь">Объявление в бот</button></div></section>
  <section class="card"><div class="btw"><h3 class="h3">Заявки на вход</h3><span class="tag acc" id="appN">3</span></div>
   <div class="list" style="margin-top:4px">${[["ОН","Олег Н.","Звонки · 8/10"],["СТ","Света Т.","Инвайтинг · 9/10"],["РБ","Рома Б.","Лидген · 6/10"]].map(([a,n,d])=>`<div class="item"><div class="ava ${hue(a)}">${a}</div><div class="grow"><b>${n}</b><span class="xs mute">тест на роль: ${d}</span></div><button class="btn s pri" data-app="ok">Взять</button><button class="btn s" data-app="no" aria-label="Отклонить">✕</button></div>`).join("")}</div></section>
  <section class="card"><h3 class="h3">Требуют внимания</h3><div class="list" style="margin-top:4px">${[["bad","У Ильи удержание упало до 71%","проверь источники инвайта"],["warn","3 человека не сдали отчёт вчера","напомнить в боте"],["warn","4 ученика застряли на уроке 5","предложить разбор"]].map(([c,t,d])=>`<div class="item" style="align-items:flex-start"><span class="tag ${c}" style="padding:3px 5px">●</span><div class="grow"><b>${t}</b><span class="xs mute">${d}</span></div></div>`).join("")}</div></section>
@@ -557,9 +618,9 @@ function shell(){
  $("#top").innerHTML=`<h1>${TITLES[S.route]}</h1><label class="searchbox search">${I.search}<input placeholder="Поиск по базе знаний" aria-label="Поиск" id="gq"></label><span class="grow"></span><button class="icon-btn" data-notif aria-label="Уведомления">${I.bell}<span class="dot"></span></button>`;
  $("#tabbar").innerHTML=TABS.map(([k,n,i])=>`<button class="${r===k?"on":""}" data-go="${k}" aria-current="${r===k?"page":"false"}">${i}<span>${n}</span></button>`).join("");
  const cnt={orders:["2",""],com:["5","a"]};
- $("#sidetabs").innerHTML=TABS.map(([k,n,i])=>`<button class="tab ${r===k?"on":""}" data-go="${k}">${i}${n}${cnt[k]?`<span class="n ${cnt[k][1]}">${cnt[k][0]}</span>`:""}</button>`).join("")+`<div class="grp lbl">Админ</div><button class="tab ${r==="admin"?"on":""}" data-go="admin">${I.admin}Управление<span class="n a">3</span></button>`;
+ $("#sidetabs").innerHTML=TABS.map(([k,n,i])=>`<button class="tab ${r===k?"on":""}" data-go="${k}">${i}${n}${cnt[k]?`<span class="n ${cnt[k][1]}">${cnt[k][0]}</span>`:""}</button>`).join("")+`<div class="grp lbl">Админ</div><button class="tab ${r==="admin"?"on":""}" data-go="admin">${I.admin}Управление<span class="n a">3</span></button><button class="tab ${r==="editor"?"on":""}" data-go="editor">${I.kb}Редактор уроков</button><button class="tab ${r==="progress"?"on":""}" data-go="progress">${I.users}Прогресс учеников</button>`;
 }
-function render(){shell();$("#view").innerHTML=`<div class="view">${V[S.route]()}</div>`;if(S.route==="home")renderTodos();if(S.route==="lesson")initLesson();bindInputs()}
+function render(){shell();$("#view").innerHTML=`<div class="view">${V[S.route]()}</div>`;if(S.route==="home")renderTodos();if(S.route==="lesson")initLesson();if(S.route==="editor")initEditor();bindInputs()}
 const TODO=[["Сдать отчёт по инвайтингу","канал ремонта · до 21:00"],["Урок 7: прогрев","2 мин + тест"],["Ответить Пете в разборе","Сообщество · 1 комментарий"]];
 function renderTodos(){
  $("#todos").innerHTML=TODO.map(([t,d],i)=>`<button class="todo ${S.todo.has(i)?"done":""}" data-todo="${i}" aria-pressed="${S.todo.has(i)}"><span class="cb">${S.todo.has(i)?I.check:""}</span><span class="grow"><b>${t}</b><span class="xs mute">${d}</span></span></button>`).join("");
@@ -664,7 +725,7 @@ document.addEventListener("submit",e=>{e.preventDefault();const id=e.target.id;
  if(id==="clForm"&&!$("#c1").value.trim()){toast("Укажи нишу заказчика");$("#c1").focus();return}
  if(id==="qaForm"){const v=$("#qa");if(!v.value.trim()){toast("Напиши вопрос");return}v.value="";toast("Вопрос отправлен наставнику модуля");return}
  close();toast({repForm:"Отчёт отправлен. Удержание проверим через 7 дней",postForm:"Опубликовано в сообществе",clForm:"Заказчик отправлен админу",noForm:"Заказ опубликован на бирже"}[id]||"Готово")});
-document.addEventListener("change",e=>{const f=e.target;if(f.type!=="file"||!f.files.length)return;const l=f.closest(".upload");l.classList.add("has");l.querySelector("span").textContent="Прикреплено: "+[...f.files].map(x=>x.name).join(", ")});
+document.addEventListener("change",e=>{const f=e.target;if(f.type!=="file"||!f.files.length)return;const l=f.closest(".upload");if(!l||f.closest("#edMain"))return;l.classList.add("has");l.querySelector("span").textContent="Прикреплено: "+[...f.files].map(x=>x.name).join(", ")});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){close();closeLB()}if($("#lb").classList.contains("on")){if(e.key==="ArrowLeft")openLB((LB-1+IMGS.length)%IMGS.length);if(e.key==="ArrowRight")openLB((LB+1)%IMGS.length)}});
 $("#scrim").onclick=close;
 addEventListener("scroll",()=>$("#top").classList.toggle("sc",scrollY>4),{passive:true});
@@ -822,6 +883,185 @@ document.addEventListener("click",e=>{
  if("qnext" in d){const q=S.quiz;if(q.i<QUIZ.length-1){q.i++;q.picked=null}else finishQuiz();renderQuiz();return}
  if("lnext" in d){openLesson(S.lessonIdx+1);return}
 });
+
+/* ---------- админ: редактор уроков ---------- */
+I.trend=ic('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>');
+const MODS=[
+ {n:"Общий блок",ls:[["l1","Как устроен диалог","pub"],["l2","Боль клиента простыми словами","pub"],["l3","Возражения: «дорого» и «подумаю»","pub"]]},
+ {n:"Переписка",ls:[["l4","Первое сообщение","pub"],["l5","Как не слить диалог на 2-м сообщении","pub"],["l6","Квалификация в переписке","pub"],["l7","Прогрев: не торопить клиента","pub"],["l8","Переход к оплате без давления","draft"],["l9","Дожим: когда клиент пропал","draft"]]},
+ {n:"Звонки",ls:[["l10","Первые 10 секунд звонка","pub"],["l11","Голос и темп","draft"]]},
+ {n:"Инвайтинг",ls:[["l12","Лимиты и прогрев аккаунта","pub"],["l13","Где искать целевые чаты","pub"]]}
+].map(m=>({n:m.n,ls:m.ls.map(([id,t,st])=>({id,t,st}))}));
+const E={sel:"l7",tab:"video",preview:false,drag:null,saveT:null};
+const LD={};
+const ytId=u=>{const m=String(u||"").match(/(?:youtu\.be\/|[?&]v=|embed\/|shorts\/|live\/)([\w-]{11})/);return m?m[1]:null};
+const TXT7="## Зачем нужен прогрев\nПрогрев — это несколько сообщений, за которые клиент сам формулирует, зачем ему продукт. К моменту цены человек уже понимает, за что платит.\n\n## Главное за 30 секунд\n- Не отвечай ценой на вопрос о цене. Сначала уточни задачу\n- Два точных вопроса лучше пяти общих\n- Короткий ответ клиента — повод задать вопрос с выбором\n\n> «Подскажите, для чего вам курс: сменить профессию или прокачать навык для текущей работы?» [03:25]";
+function ld(id){if(LD[id])return LD[id];const l=findL(id).l;
+ if(id==="l7")LD[id]={url:"https://youtu.be/aB3dE5fG7hJ",ch:CH.map(c=>[fmtT(c[0]),c[1]]),text:TXT7,imgs:IMGS.map(([c,u])=>({c,u})),
+  files:[{n:"Чек-лист прогрева",d:"PDF · 2 страницы"},{n:"12 вопросов для квалификации",d:"шаблоны"},{n:"Первое сообщение, на которое отвечают",d:"статья базы"}],
+  quiz:QUIZ.map(q=>({q:q.q,o:[...q.o],a:q.a,ex:q.ex})),pass:4,retake:"1 час",xp:100,after:"после теста предыдущего урока",who:"Переписка",req:true,
+  task:"Возьми три своих последних диалога, найди место, где ты назвал цену, и перепиши его по схеме из урока."};
+ else if(l.st==="pub")LD[id]={url:"https://youtu.be/Xy9"+id.padEnd(8,"Q").slice(0,8),ch:[["00:00","Вступление"],["01:10","Главная мысль"],["02:30","Пример"]],text:"## О чём урок\n"+l.t+": короткий разбор с примерами из реальных диалогов.\n\n- Главная мысль урока\n- Типичная ошибка\n- Что делать вместо неё",imgs:[],files:[],
+  quiz:QUIZ.slice(0,3).map(q=>({q:q.q,o:[...q.o],a:q.a,ex:q.ex})),pass:2,retake:"1 час",xp:100,after:"после теста предыдущего урока",who:"Все ученики",req:true,task:""};
+ else LD[id]={url:id==="l8"?"https://youtu.be/Pq7rS9tU1vW":"",ch:[],text:"",imgs:[],files:[],quiz:[],pass:3,retake:"1 час",xp:100,after:"после теста предыдущего урока",who:"Переписка",req:true,task:""};
+ return LD[id]}
+function findL(id){for(let mi=0;mi<MODS.length;mi++){const k=MODS[mi].ls.findIndex(l=>l.id===id);if(k>-1)return{mi,k,l:MODS[mi].ls[k]}}return{}}
+function md(src){const e=esc(src).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\[(\d{1,2}:\d{2})\]/g,'<span class="tc">$1</span>');let h="",ul=false;
+ e.split("\n").forEach(line=>{const t=line.trim();if(t.startsWith("- ")){if(!ul){h+="<ul class=\"rules\" style=\"margin-bottom:10px\">";ul=true}h+=`<li>${t.slice(2)}</li>`;return}if(ul){h+="</ul>";ul=false}
+  if(!t)return;if(t.startsWith("## "))h+=`<h4 style="font-size:16px;margin:14px 0 6px">${t.slice(3)}</h4>`;else if(t.startsWith("&gt; "))h+=`<div class="script">${t.slice(5)}</div>`;else h+=`<p>${t}</p>`});
+ return (ul?h+"</ul>":h)||'<p class="mute">Конспект пока пустой.</p>'}
+function checks(D){const qok=D.quiz.length>=3&&D.quiz.every(q=>q.q.trim()&&q.o.filter(o=>o.trim()).length>=2);
+ return [["Видео по ссылке",!!ytId(D.url),1],["Хотя бы 2 главы",D.ch.filter(c=>c[1].trim()).length>=2,1],["Конспект",D.text.trim().length>40,1],["Тест: от 3 вопросов",qok,1],["Картинки",D.imgs.length>0,0],["Задание к уроку",!!D.task.trim(),0]]}
+
+V.editor=()=>{const n=MODS.reduce((s,m)=>s+m.ls.length,0);return `
+<div class="full row" style="gap:10px;flex-wrap:wrap"><button class="link" data-go="admin">← Управление</button><span class="xs mute">${MODS.length} модуля · ${n} уроков · перетаскивай уроки, чтобы поменять порядок</span></div>
+<div class="full edgrid">
+ <div class="sec edside"><details class="card tree" id="tree" open><summary><span class="h3">Структура курса</span><span class="xs mute">${n} уроков</span></summary><div id="treeBody"></div></details><section class="card" id="ready"></section></div>
+ <div class="sec" id="edMain"></div>
+</div>`};
+function initEditor(){if(innerWidth<960)$("#tree").open=false;renderTree();renderEdMain();renderReady();
+ const tb=$("#treeBody");
+ tb.ondragstart=e=>{const r=e.target.closest(".tl-row");if(!r)return;E.drag=r.dataset.lid;r.classList.add("drag");try{e.dataTransfer.setData("text/plain",E.drag);e.dataTransfer.effectAllowed="move"}catch(_){}};
+ tb.ondragend=()=>{E.drag=null;tb.querySelectorAll(".drag,.over").forEach(x=>x.classList.remove("drag","over"))};
+ tb.ondragover=e=>{if(!E.drag)return;e.preventDefault();tb.querySelectorAll(".over").forEach(x=>x.classList.remove("over"));const r=e.target.closest(".tl-row,.addl");if(r)r.classList.add("over")};
+ tb.ondrop=e=>{e.preventDefault();if(!E.drag)return;const r=e.target.closest(".tl-row"),a=e.target.closest(".addl"),m=e.target.closest(".modb");if(!m)return;
+  const src=findL(E.drag);const item=MODS[src.mi].ls.splice(src.k,1)[0];const mi=+m.dataset.mi;
+  if(r&&r.dataset.lid!==item.id){const k=MODS[mi].ls.findIndex(l=>l.id===r.dataset.lid);MODS[mi].ls.splice(k,0,item)}else if(r){MODS[src.mi].ls.splice(src.k,0,item)}else MODS[mi].ls.push(item);
+  E.drag=null;renderTree();renderEdHead();toast("Порядок уроков сохранён")};
+ tb.onkeydown=e=>{const r=e.target.closest(".tl-row");if(r&&(e.key==="Enter"||e.key===" ")){e.preventDefault();selectL(r.dataset.lid)}}}
+function renderTree(){$("#treeBody").innerHTML=MODS.map((m,mi)=>`<div class="modb" data-mi="${mi}"><div class="btw lbl" style="padding:14px 8px 4px"><span>${esc(m.n)}</span><span>${m.ls.length}</span></div>
+ ${m.ls.map(l=>`<div class="tl-row ${l.id===E.sel?"on":""}" draggable="true" data-lid="${l.id}" role="button" tabindex="0" aria-current="${l.id===E.sel}"><span class="hdl" aria-hidden="true">⋮⋮</span><span class="st ${l.st==="draft"?"draft":""}" title="${l.st==="draft"?"черновик":"опубликован"}"></span><span class="grow ell">${esc(l.t)}</span></div>`).join("")}
+ <button class="addl" data-addl="${mi}">${I.plus} Урок</button></div>`).join("")+`<button class="btn s w" style="margin-top:12px" data-addmod>${I.plus} Модуль</button>
+ <div class="row xs mute" style="margin-top:12px;gap:14px"><span class="row" style="gap:6px"><span class="st"></span>опубликован</span><span class="row" style="gap:6px"><span class="st draft"></span>черновик</span></div>`}
+function selectL(id){E.sel=id;E.preview=false;renderTree();renderEdMain();renderReady();if(innerWidth<960){$("#tree").open=false;$("#edMain").scrollIntoView({behavior:"smooth",block:"start"})}}
+function renderEdMain(){const {l,mi,k}=findL(E.sel),D=ld(E.sel);
+ $("#edMain").innerHTML=`<section class="card" id="edHead"></section>
+ <div class="seg" id="edTabs">${[["video","Видео"],["text","Конспект"],["files","Материалы"],["quiz","Тест · "+D.quiz.length],["access","Доступ"]].map(([t,n])=>`<button class="${E.tab===t?"on":""}" data-edtab="${t}">${n}</button>`).join("")}</div>
+ <section class="card" id="edPane"></section>`;renderEdHead();renderEdPane()}
+function renderEdHead(){const {l,mi,k}=findL(E.sel);
+ $("#edHead").innerHTML=`<div class="edhead"><span class="lbl grow">${esc(MODS[mi].n)} · урок ${k+1}</span><span class="saved" id="saved"><i></i>Черновик сохранён</span></div>
+ <input class="inp title-inp" data-f="title" value="${esc(l.t)}" aria-label="Название урока">
+ <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:10px"><span class="tag ${l.st==="pub"?"ok":"warn"}">${l.st==="pub"?"Опубликован":"Черновик"}</span><span class="grow"></span><button class="btn s" data-edprev>Предпросмотр</button><button class="btn s pri" data-edpub>${l.st==="pub"?"Сохранить изменения":"Опубликовать"}</button></div>`}
+function ytHTML(u){if(!u.trim())return `<div class="xs mute" style="margin-top:6px">Вставь ссылку, и мы сразу проверим её</div>`;const id=ytId(u);
+ return id?`<div class="media" style="margin-top:10px"><span class="pl" style="background:var(--ok);color:var(--s1)">${I.check}</span><div class="grow"><b class="sm" style="font-weight:600;display:block">Видео найдено</b><span class="xs mute mono">ID ${id} · длительность подтянется из YouTube</span></div></div>`
+ :`<div class="sm" style="color:var(--bad);margin-top:8px">Не похоже на ссылку YouTube. Пример: https://youtu.be/aB3dE5fG7hJ</div>`}
+function renderEdPane(){const D=ld(E.sel),el=$("#edPane"),t=E.tab;
+ if(t==="video")el.innerHTML=`<div class="field"><label for="yurl">Ссылка на видео в YouTube</label><input class="inp" id="yurl" data-f="url" value="${esc(D.url)}" placeholder="https://youtu.be/… или https://www.youtube.com/watch?v=…"></div><div id="ytStatus">${ytHTML(D.url)}</div>
+ <div class="note" style="margin-top:12px">${I.lock}<span>В YouTube выбери доступ <b>«По ссылке»</b>. Видео с «Ограниченным доступом» в приложении не откроется.</span></div>
+ <div class="btw" style="margin-top:22px"><h3 class="h3">Главы</h3><span class="xs mute">ученик перематывает по ним</span></div>
+ <div style="display:grid;gap:8px;margin-top:10px">${D.ch.map((c,k)=>`<div class="rowf"><input class="inp mono" data-ch="${k}" data-cf="0" value="${esc(c[0])}" placeholder="00:00" aria-label="Тайм-код главы ${k+1}"><input class="inp" data-ch="${k}" data-cf="1" value="${esc(c[1])}" placeholder="Название главы" aria-label="Название главы ${k+1}"><button class="ndel" data-delch="${k}" aria-label="Удалить главу">✕</button></div>`).join("")||`<div class="empty" style="padding:14px">Глав пока нет</div>`}</div>
+ <div class="row" style="gap:8px;margin-top:10px;flex-wrap:wrap"><button class="btn s" data-addch>${I.plus} Глава</button><button class="btn s" data-impch>Вставить из описания YouTube</button></div>
+ <div id="impBox" hidden style="margin-top:12px"><textarea class="inp" id="impText" placeholder="00:00 Вступление&#10;00:48 Ошибка: цена в первом ответе&#10;02:01 Метод двух вопросов"></textarea><button class="btn s pri" style="margin-top:8px" data-parsech>Разобрать тайм-коды</button></div>`;
+ else if(t==="text")el.innerHTML=`<div class="btw" style="flex-wrap:wrap"><h3 class="h3">Конспект</h3><div class="seg"><button class="${E.preview?"":"on"}" data-prev="0">Текст</button><button class="${E.preview?"on":""}" data-prev="1">Как увидит ученик</button></div></div>
+ ${E.preview?`<div class="prose" style="margin-top:12px">${md(D.text)}</div>`:`<div style="margin-top:12px"><div class="tool">${[["h","Заголовок"],["b","Жирный"],["li","Список"],["q","Фраза-скрипт"],["tc","Тайм-код"]].map(([k,n])=>`<button type="button" data-ins="${k}">${n}</button>`).join("")}</div><textarea class="inp md-in" id="mdText" data-f="text" aria-label="Текст конспекта">${esc(D.text)}</textarea><div class="xs mute" style="margin-top:6px">## заголовок · **жирный** · - пункт списка · &gt; фраза-скрипт · [03:25] тайм-код</div></div>`}
+ <div class="btw" style="margin-top:22px"><h3 class="h3">Картинки</h3><span class="xs mute">${D.imgs.length} · открываются на весь экран</span></div>
+ <div class="thumbs" style="margin-top:10px">${D.imgs.map((m,k)=>`<div class="thumb"><div class="im"><img src="${m.u}" alt="${esc(m.c)}"><button class="x" data-delimg="${k}" aria-label="Удалить картинку">✕</button></div><input class="inp" data-imgc="${k}" value="${esc(m.c)}" aria-label="Подпись к картинке"></div>`).join("")}<label class="addimg">${I.upload}<span>Добавить картинки</span><input type="file" accept="image/*" multiple data-addimg></label></div>
+ <div class="field" style="margin-top:20px"><label for="task">Задание к уроку · проверяет наставник</label><textarea class="inp" id="task" data-f="task" placeholder="Что ученик должен сделать после урока">${esc(D.task)}</textarea></div>`;
+ else if(t==="files")el.innerHTML=`<h3 class="h3">Материалы к уроку</h3><div class="list" style="margin-top:6px">${D.files.map((f,k)=>`<div class="art"><span class="ic" style="--h:var(--info)">${I.doc}</span><span class="grow"><b>${esc(f.n)}</b><span class="xs mute">${esc(f.d)}</span></span><button class="ndel" data-delfile="${k}" aria-label="Убрать">✕</button></div>`).join("")||`<div class="empty" style="padding:14px">Материалов пока нет</div>`}</div>
+ <div style="display:grid;gap:8px;margin-top:12px"><label class="upload">${I.upload}<span>Загрузить файл: PDF, таблица, документ</span><input type="file" multiple data-addfile></label>
+ <select class="inp" data-linkart aria-label="Связать со статьёй"><option value="">Связать со статьёй из базы знаний…</option>${ARTS.map(a=>`<option value="${a.id}">${esc(a.t)}</option>`).join("")}</select></div>`;
+ else if(t==="quiz"){const n=D.quiz.length;el.innerHTML=`<div class="kv"><div class="field"><label for="qpass">Проходной балл</label><select class="inp" id="qpass" data-f="pass">${Array.from({length:Math.max(n,1)},(_,k)=>`<option ${D.pass==k+1?"selected":""} value="${k+1}">${k+1} из ${Math.max(n,1)}</option>`).join("")}</select></div><div class="field"><label for="qre">Пересдача через</label><select class="inp" id="qre" data-f="retake">${["15 минут","1 час","1 день"].map(o=>`<option ${D.retake===o?"selected":""}>${o}</option>`).join("")}</select></div><div class="field"><label for="qxp">XP за урок</label><input class="inp mono" id="qxp" data-f="xp" inputmode="numeric" value="${D.xp}"></div></div>
+ <div class="xs mute" style="margin:14px 0 10px">Кружком отметь верный ответ. Объяснение ученик увидит сразу после ответа.</div>
+ <div style="display:grid;gap:10px">${D.quiz.map((q,k)=>`<div class="qcard"><div class="btw"><span class="lbl">Вопрос ${k+1}</span><div class="row" style="gap:2px"><button class="ndel" data-qmv="${k}" data-dir="-1" aria-label="Поднять вопрос" ${k?"":"disabled"}>↑</button><button class="ndel" data-qmv="${k}" data-dir="1" aria-label="Опустить вопрос" ${k<n-1?"":"disabled"}>↓</button><button class="ndel" data-qdel="${k}" aria-label="Удалить вопрос">✕</button></div></div>
+  <textarea class="inp" data-qi="${k}" data-qf="q" style="min-height:56px" placeholder="Текст вопроса" aria-label="Текст вопроса ${k+1}">${esc(q.q)}</textarea>
+  <div style="display:grid;gap:6px">${q.o.map((o,j)=>`<div class="optrow"><input type="radio" name="qa${k}" ${q.a===j?"checked":""} data-qa="${k}" data-oj="${j}" aria-label="Верный ответ: вариант ${j+1}"><input class="inp ${q.a===j?"right":""}" data-qi="${k}" data-oj="${j}" value="${esc(o)}" placeholder="Вариант ${j+1}" aria-label="Вариант ${j+1}"><button class="ndel" data-odel="${k}" data-oj="${j}" aria-label="Удалить вариант" ${q.o.length>2?"":"disabled"}>✕</button></div>`).join("")}</div>
+  ${q.o.length<6?`<button class="addl" data-oadd="${k}">${I.plus} Вариант</button>`:""}
+  <input class="inp" data-qi="${k}" data-qf="ex" value="${esc(q.ex)}" placeholder="Объяснение после ответа" aria-label="Объяснение"></div>`).join("")}</div>
+ <button class="btn w" style="margin-top:10px" data-qadd>${I.plus} Вопрос</button>`}
+ else{const {mi}=findL(E.sel);el.innerHTML=`<div style="display:grid;gap:16px">
+ <div class="field"><label for="amod">Модуль</label><select class="inp" id="amod" data-movemod>${MODS.map((m,k)=>`<option value="${k}" ${k===mi?"selected":""}>${esc(m.n)}</option>`).join("")}</select></div>
+ <div class="field"><label for="aafter">Когда открывается</label><select class="inp" id="aafter" data-f="after">${["после теста предыдущего урока","сразу","вручную, по решению наставника"].map(o=>`<option ${D.after===o?"selected":""}>${o}</option>`).join("")}</select></div>
+ <div class="field"><label>Кому виден</label><div class="chips">${["Все ученики","Переписка","Звонки","Инвайтинг"].map(o=>`<button class="${D.who===o?"on":""}" data-who="${o}">${o}</button>`).join("")}</div></div>
+ <button class="item" data-req role="switch" aria-checked="${D.req}" style="border-top:1px solid var(--line)"><span class="grow"><b>Обязателен для допуска к экзамену</b><span class="xs mute">без него экзамен не откроется</span></span><span class="sw ${D.req?"on":""}"></span></button>
+ <div class="note">${I.bell}<span>После публикации бот сообщит о новом уроке всем, кому он виден.</span></div></div>`}}
+function renderReady(){const D=ld(E.sel),C=checks(D),need=C.filter(c=>c[2]),ok=need.filter(c=>c[1]).length;
+ $("#ready").innerHTML=`<div class="btw"><h3 class="h3">Готовность</h3><span class="mono xs ${ok===need.length?"":"mute"}" style="${ok===need.length?"color:var(--ok)":""}">${ok}/${need.length}</span></div>
+ <div style="margin-top:6px">${C.map(([n,v,r])=>`<div class="check ${v?"ok":""}"><span class="ci2">${v?I.check:""}</span><span class="grow">${n}</span>${r?"":'<span class="xs mute">по желанию</span>'}</div>`).join("")}</div>`}
+function markSaving(){const s=$("#saved");if(!s)return;s.classList.add("busy");s.lastChild.textContent="Сохраняю…";clearTimeout(E.saveT);
+ E.saveT=setTimeout(()=>{const d=new Date();s.classList.remove("busy");s.lastChild.textContent="Сохранено · "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")},700);renderReady()}
+function edTabsRefresh(){const D=ld(E.sel);const b=$('[data-edtab="quiz"]');if(b)b.textContent="Тест · "+D.quiz.length}
+
+document.addEventListener("input",e=>{const t=e.target;if(!t.closest||!t.closest("#edMain"))return;const d=t.dataset,D=ld(E.sel);
+ if(d.f==="title"){findL(E.sel).l.t=t.value;const r=document.querySelector(`.tl-row[data-lid="${E.sel}"] .grow`);if(r)r.textContent=t.value||"Без названия"}
+ else if(d.f){D[d.f]=d.f==="pass"?+t.value:t.value;if(d.f==="url")$("#ytStatus").innerHTML=ytHTML(t.value)}
+ else if(d.ch!==undefined)D.ch[+d.ch][+d.cf]=t.value;
+ else if(d.imgc!==undefined)D.imgs[+d.imgc].c=t.value;
+ else if(d.qi!==undefined){const q=D.quiz[+d.qi];if(d.oj!==undefined&&t.type!=="radio")q.o[+d.oj]=t.value;else if(d.qf)q[d.qf]=t.value}
+ else return;markSaving()});
+document.addEventListener("change",e=>{const t=e.target;if(!t.closest||!t.closest("#edMain"))return;const d=t.dataset,D=ld(E.sel);
+ if(d.qa!==undefined){D.quiz[+d.qa].a=+d.oj;t.closest(".qcard").querySelectorAll(".optrow .inp").forEach((x,j)=>x.classList.toggle("right",j===+d.oj));markSaving()}
+ else if("addimg" in d&&t.files.length){[...t.files].forEach(f=>{const r=new FileReader();r.onload=()=>{D.imgs.push({c:f.name.replace(/\.[^.]+$/,""),u:r.result});renderEdPane();markSaving()};r.readAsDataURL(f)})}
+ else if("addfile" in d&&t.files.length){[...t.files].forEach(f=>D.files.push({n:f.name.replace(/\.[^.]+$/,""),d:(f.name.split(".").pop()||"файл").toUpperCase()+" · "+Math.max(1,Math.round(f.size/1024))+" КБ"}));renderEdPane();markSaving()}
+ else if("linkart" in d&&t.value){const a=ARTS.find(x=>x.id===t.value);D.files.push({n:a.t,d:"статья базы"});renderEdPane();markSaving()}
+ else if("movemod" in d){const s=findL(E.sel);const it=MODS[s.mi].ls.splice(s.k,1)[0];MODS[+t.value].ls.push(it);renderTree();renderEdHead();markSaving();toast("Урок перенесён в модуль «"+MODS[+t.value].n+"»")}});
+
+document.addEventListener("click",e=>{const t=e.target.closest("button,.tl-row");if(!t||!t.closest("#edMain,#treeBody,#tree"))return;const d=t.dataset,D=ld(E.sel);
+ if(t.classList.contains("tl-row")){selectL(d.lid);return}
+ if(d.addl!==undefined){const id="n"+Date.now();MODS[+d.addl].ls.push({id,t:"Новый урок",st:"draft"});E.tab="video";selectL(id);const ti=$(".title-inp");ti.focus();ti.select();return}
+ if("addmod" in d){MODS.push({n:"Модуль "+(MODS.length+1),ls:[]});renderTree();toast("Модуль добавлен");return}
+ if(d.edtab){E.tab=d.edtab;document.querySelectorAll("#edTabs button").forEach(b=>b.classList.toggle("on",b===t));renderEdPane();return}
+ if(d.prev!==undefined){E.preview=d.prev==="1";renderEdPane();return}
+ if(d.ins){const ta=$("#mdText");const sn={h:"\n## Заголовок\n",b:"**жирный текст**",li:"\n- пункт списка",q:"\n> «Фраза для клиента»",tc:` [${fmtT(0)}]`}[d.ins];const a=ta.selectionStart,b=ta.selectionEnd;
+  ta.value=ta.value.slice(0,a)+sn+ta.value.slice(b);ta.focus();ta.setSelectionRange(a+sn.length,a+sn.length);D.text=ta.value;markSaving();return}
+ if("addch" in d){D.ch.push([D.ch.length?"":"00:00",""]);renderEdPane();markSaving();const ins=document.querySelectorAll('[data-cf="0"]');ins[ins.length-1].focus();return}
+ if(d.delch!==undefined){D.ch.splice(+d.delch,1);renderEdPane();markSaving();return}
+ if("impch" in d){const b=$("#impBox");b.hidden=!b.hidden;if(!b.hidden)$("#impText").focus();return}
+ if("parsech" in d){const rows=$("#impText").value.split("\n").map(s=>s.trim().match(/^(\d{1,2}:\d{2}(?::\d{2})?)\s*[-–—]?\s*(.+)$/)).filter(Boolean).map(m=>[m[1],m[2]]);
+  if(!rows.length){toast("Не нашли тайм-коды. Формат: 00:48 Название");return}D.ch=rows;renderEdPane();markSaving();toast("Добавлено глав: "+rows.length);return}
+ if(d.delimg!==undefined){D.imgs.splice(+d.delimg,1);renderEdPane();markSaving();return}
+ if(d.delfile!==undefined){D.files.splice(+d.delfile,1);renderEdPane();markSaving();return}
+ if("qadd" in d){D.quiz.push({q:"",o:["",""],a:0,ex:""});renderEdPane();edTabsRefresh();markSaving();const q=document.querySelectorAll('[data-qf="q"]');q[q.length-1].focus();return}
+ if(d.qdel!==undefined){D.quiz.splice(+d.qdel,1);D.pass=Math.min(D.pass,Math.max(D.quiz.length,1));renderEdPane();edTabsRefresh();markSaving();return}
+ if(d.qmv!==undefined){const k=+d.qmv,j=k+ +d.dir;if(j<0||j>=D.quiz.length)return;[D.quiz[k],D.quiz[j]]=[D.quiz[j],D.quiz[k]];renderEdPane();markSaving();return}
+ if(d.oadd!==undefined){D.quiz[+d.oadd].o.push("");renderEdPane();markSaving();return}
+ if(d.odel!==undefined){const q=D.quiz[+d.odel],j=+d.oj;if(q.o.length<=2)return;q.o.splice(j,1);if(q.a>=q.o.length||q.a===j)q.a=0;else if(q.a>j)q.a--;renderEdPane();markSaving();return}
+ if(d.who){D.who=d.who;t.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===t));markSaving();return}
+ if("req" in d){D.req=!D.req;t.querySelector(".sw").classList.toggle("on",D.req);t.setAttribute("aria-checked",D.req);markSaving();return}
+ if("edprev" in d){if(E.sel==="l7"){openLesson(6);return}toast(ytId(D.url)?"Предпросмотр откроется так, как урок увидит ученик":"Для предпросмотра добавь ссылку на видео");return}
+ if("edpub" in d){const miss=checks(D).filter(c=>c[2]&&!c[1]).map(c=>c[0].toLowerCase());
+  if(miss.length){toast("Не хватает: "+miss.join(", "));return}const l=findL(E.sel).l;const was=l.st;l.st="pub";renderTree();renderEdHead();
+  toast(was==="pub"?"Изменения сохранены у всех учеников":"Урок опубликован. Бот сообщит ученикам");return}
+});
+
+/* ---------- админ: прогресс учеников ---------- */
+S.progDir="Переписка";
+const PF={"Переписка":1,"Звонки":.55,"Инвайтинг":.7};
+const STUD=[["Олег Н.",4,"f",5,2],["Катя М.",4,"f",6,3],["Денис Л.",4,"c",4,1],["Рома Б.",2,"c",0,1],["Света Т.",6,"c",1,1],["Аня П.",7,"c",1,1],["Вика Р.",9,"c",0,1],["Илья С.",10,"d",0,1]];
+V.progress=()=>{const f=PF[S.progDir],base=[48,46,44,41,29,27,24,21,18,15].map(x=>Math.round(x*f)),sc=["4,8","4,6","4,5","4,4","3,6","4,2","4,3","4,1","4,0","—"];
+ const drops=base.map((c,k)=>k?Math.round((1-c/base[k-1])*100):0),worst=drops.indexOf(Math.max(...drops));
+ const st=STUD.slice(0,f<1?6:8);
+ return `
+<div class="full row" style="gap:10px;flex-wrap:wrap"><button class="link" data-go="admin">← Управление</button><span class="grow"></span><div class="seg">${Object.keys(PF).map(k=>`<button class="${S.progDir===k?"on":""}" data-pdir="${k}">${k}</button>`).join("")}</div></div>
+<div class="full kpis">${[["Учатся сейчас",base[0],"в направлении"],["Прошли курс",base[9],Math.round(base[9]/base[0]*100)+"% от начавших"],["Средний балл тестов","4,3","из 5"],["Застряли",st.filter(s=>s[3]>=3).length,"больше 3 дней без движения"]].map(([l,v,s])=>`<div class="card kpi"><span class="lbl">${l}</span><b>${v}</b><span class="xs mute">${s}</span></div>`).join("")}</div>
+<div class="sec">
+ <section class="card"><div class="btw" style="flex-wrap:wrap"><h3 class="h3">Сколько учеников дошли до урока</h3><span class="xs mute">число · средний балл теста</span></div>
+  <div class="fun" style="margin-top:14px">${LESSONS.map(([t],k)=>`<div class="frow ${k===worst?"drop":""}"><span class="ell sm">${k+1}. ${t}</span><div class="fbar"><i style="width:${base[k]/base[0]*100}%"></i>${k===worst?`<span class="fdrop">−${drops[k]}%</span>`:""}</div><span class="mono xs">${base[k]} · ${sc[k]}</span></div>`).join("")}</div>
+  <div class="note" style="margin-top:14px">${I.trend}<span class="grow">На уроке ${worst+1} «${LESSONS[worst][0]}» теряем ${drops[worst]}% учеников, а средний балл ниже всех. Добавь пример переписки или раздели урок на два.</span></div>
+  <button class="btn s" style="margin-top:10px" data-progedit="l6">Открыть урок в редакторе</button></section>
+ <section class="card"><div class="btw" style="flex-wrap:wrap"><h3 class="h3">Ученики по урокам</h3><div class="row xs mute" style="gap:12px;flex-wrap:wrap"><span class="row" style="gap:5px"><i class="cell d"></i>пройден</span><span class="row" style="gap:5px"><i class="cell c"></i>сейчас</span><span class="row" style="gap:5px"><i class="cell f"></i>тест не сдан</span></div></div>
+  <div class="tbl mx" style="margin-top:8px"><table><thead><tr><th>Ученик</th>${LESSONS.map((_,k)=>`<th style="text-align:center;padding-inline:2px">${k+1}</th>`).join("")}<th>Без движения</th></tr></thead><tbody>
+  ${st.map((s,r)=>`<tr class="srow" data-stud="${r}" tabindex="0"><td><b>${s[0]}</b></td>${LESSONS.map((_,k)=>`<td style="text-align:center;padding-inline:2px"><i class="cell ${k<s[1]?"d":k===s[1]?s[2]:""}"></i></td>`).join("")}<td>${s[3]>=3?`<span class="tag warn">${s[3]} дн.</span>`:`<span class="xs mute">${s[3]?s[3]+" дн.":"сегодня"}</span>`}</td></tr>`).join("")}</tbody></table></div>
+  <div class="xs mute" style="margin-top:8px">Нажми на ученика, чтобы открыть его прогресс</div></section>
+</div>
+<div class="sec">
+ <section class="card"><div class="btw"><h3 class="h3">Застряли</h3><span class="tag warn">${st.filter(s=>s[3]>=3).length}</span></div>
+  <div class="list" style="margin-top:4px">${st.filter(s=>s[3]>=3).map(s=>`<div class="item"><div class="ava ${hue(s[0])}">${s[0].split(" ").map(w=>w[0]).join("")}</div><div class="grow"><b>${s[0]}</b><span class="xs mute">урок ${s[1]+1}${s[2]==="f"?` · тест не сдан, попыток: ${s[4]}`:""} · ${s[3]} дн.</span></div></div>`).join("")}</div>
+  <button class="btn s pri w" style="margin-top:10px" data-toast="Напоминание ушло в бот трём ученикам">Напомнить всем в боте</button></section>
+ <section class="card"><h3 class="h3">Тесты, которые сдают хуже всего</h3><div class="list" style="margin-top:4px">${[["Квалификация в переписке",54],["Дожим: когда клиент пропал",62],["Возражения: «дорого» и «подумаю»",71]].map(([t,v])=>`<div class="item"><div class="grow"><b>${t}</b><span class="xs mute">с первой попытки сдают ${v}%</span></div><span class="mono xs" style="color:var(--${v<60?"bad":"warn"})">${v}%</span></div>`).join("")}</div></section>
+ <section class="card"><h3 class="h3">Заметки учеников</h3><p class="sm mute" style="margin:6px 0 0">Личные заметки видит только ученик. Здесь только то, чем поделились: 34 конспекта за месяц, чаще всего по уроку 7.</p></section>
+</div>`};
+function studSheet(r){const s=STUD[r],pct=Math.round(Math.min(s[1],10)/10*100);
+ sheet(`<div class="stack"><div class="row"><div class="ava l ${hue(s[0])}">${s[0].split(" ").map(w=>w[0]).join("")}</div><div class="grow"><h3 id="sheetTitle">${s[0]}</h3><span class="sm mute">Переписка · ${s[3]?`последний вход ${s[3]} дн. назад`:"сегодня в приложении"}</span></div></div>
+ <div><div class="btw xs mute"><span>Прогресс курса</span><span class="mono">${Math.min(s[1],10)}/10 · ${pct}%</span></div><div class="bar a" style="margin-top:6px"><i style="width:${pct}%"></i></div></div>
+ <div class="kv"><div><span class="xs mute">Сейчас</span><b style="font-size:15px">${s[1]<10?"Урок "+(s[1]+1):"Курс пройден"}</b></div><div><span class="xs mute">Средний балл</span><b>${s[2]==="f"?"3,4":"4,5"}</b></div><div><span class="xs mute">Попыток теста</span><b>${s[4]}</b></div></div>
+ ${s[2]==="f"?`<div class="note">${I.shield}<span>Тест урока ${s[1]+1} не сдан ${s[4]} раз(а). Чаще всего ошибается в вопросе про «короткий ответ клиента».</span></div>`:""}
+ <div class="field"><label for="mn">Заметка наставника · видят только админы и наставники</label><textarea class="inp" id="mn" placeholder="Например: нужен разбор переписки, договорились на пятницу"></textarea></div>
+ <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn pri" data-toast="Напоминание отправлено в бот">Напомнить в боте</button><a class="btn" href="https://t.me/" target="_blank" rel="noopener">${I.tg} Написать в Telegram</a><button class="btn" data-toast="Урок открыт вручную">Открыть следующий урок</button></div></div>`)}
+document.addEventListener("click",e=>{const t=e.target.closest("button,.srow");if(!t)return;const d=t.dataset;
+ if(d.pdir){S.progDir=d.pdir;render();return}
+ if(d.progedit){E.sel=d.progedit;E.tab="text";go("editor");return}
+ if(d.stud!==undefined){studSheet(+d.stud);return}});
+document.addEventListener("keydown",e=>{const r=e.target.closest&&e.target.closest(".srow");if(r&&e.key==="Enter")studSheet(+r.dataset.stud)});
 
 (()=>{try{const th=localStorage.getItem("elis-theme");if(th)document.documentElement.dataset.theme=th}catch(_){}const h=location.hash.slice(1);S.route=V[h]?h:"home";render()})();
 </script>
